@@ -1,0 +1,150 @@
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    color: #1e1e1e;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #cfe3f1;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo img {
+    height: 40px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin: 0 20px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+    font-size: 16px;
+}
+
+.search-bar button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    color: #fff;
+    cursor: pointer;
+}
+
+.search-bar button i {
+    font-size: 16px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a {
+    margin-left: 20px;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+}
+
+.categories {
+    position: relative;
+}
+
+.categories:hover .dropdown,
+.dropdown:hover {
+    display: flex;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%; /* Asegura que el menú esté justo debajo de la categoría */
+    left: -600%; /* Ajusta esta propiedad según el diseño para mover el menú a la izquierda */
+    background-color: #cfe3f1;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: max-content; /* Asegura que el menú se ajuste al contenido */
+    flex-direction: row; /* Despliega los elementos en una fila */
+}
+
+.dropdown-column {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.dropdown-column a {
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.dropdown-column a i {
+    margin-right: 10px;
+}
+
+.dropdown-column a:hover {
+    background-color: #f1f1f1;
+}
+
+.profile i, .cart i {
+    font-size: 20px;
+}
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+h3 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+h4, h5, h6 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+button, .btn {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ee6c4d; /* Color de fondo para botones */
+    color: white; /* Color del texto en botones */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover, .btn:hover {
+    background-color: #d35445; /* Color de fondo al pasar el ratón por botones */
+}
