@@ -4,13 +4,23 @@ body {
     color: #1e1e1e;
 }
 
+/* Estilos de la barra de navegación */
 .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     background: #cfe3f1;
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Asegura que esté por encima del resto del contenido */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+main{
+    margin-top: 70px;
 }
 
 .logo img {
@@ -214,5 +224,24 @@ button:hover, .btn:hover {
 
 .footer-section a:hover {
     color: #98c1d9;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px;
+    margin-right: 10px; /* Ajusta el espacio entre el logo y el texto si es necesario */
+}
+
+.logo a {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 
