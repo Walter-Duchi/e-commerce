@@ -62,7 +62,6 @@ main{
 }
 
 .nav-links a {
-    margin-left: 20px;
     color: #333;
     text-decoration: none;
     font-weight: bold;
@@ -82,7 +81,7 @@ main{
     display: none;
     position: absolute;
     top: 100%; /* Asegura que el menú esté justo debajo de la categoría */
-    left: -600%; /* Ajusta esta propiedad según el diseño para mover el menú a la izquierda */
+    left: -400%; /* Ajusta esta propiedad según el diseño para mover el menú a la izquierda */
     background-color: #cfe3f1;
     border: 1px solid #ddd;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -144,7 +143,7 @@ h4, h5, h6 {
 }
 
 button.cuenta{
-    margin-left: 10px;
+    margin: 0 15px 0 5px;
 }
 
 
@@ -234,6 +233,9 @@ button:hover, .btn:hover {
 .logo {
     display: flex;
     align-items: center;
+}
+div.logo{
+    padding-right: 10px;
 }
 
 .logo img {
@@ -337,6 +339,7 @@ i.ocultar{
     top: 60px; /* Ajusta según la altura de la barra superior */
     left: 0;
     width: 100%;
+    
     background: #cfe3f1;
     padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -345,14 +348,23 @@ i.ocultar{
 }
 
 .nav-links a {
-    margin: 0 20px;
     color: #333;
     text-decoration: none;
     font-weight: bold;
 }
 
+.espacio-derecho{
+    padding-right: 45px;
+}
 .nav-links a.highlight {
     color: #3d5a80;
     font-weight: bold;
 }
 
+a.profile{
+padding: 0 20px
+}
+
+.espacio-derecha{
+    padding: 0 10px
+}
