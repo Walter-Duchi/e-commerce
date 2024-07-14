@@ -9,7 +9,7 @@ body {
     position: fixed;
     top: 0;
     left: -5px;
-    width: 98%;
+    width: 97.5%;
     background: #cfe3f1;
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -143,20 +143,25 @@ h4, h5, h6 {
     font-weight: normal;
 }
 
+button.cuenta{
+    margin-left: 10px;
+}
+
+
 button, .btn {
     font-family: 'Lato', sans-serif;
     font-size: 14px;
     font-weight: bold;
-    background-color: #ee6c4d; /* Color de fondo para botones */
+    background-color: #3d5a80; /* Color de fondo para botones */
     color: white; /* Color del texto en botones */
-    padding: 10px 20px;
+    padding: 10px 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
 button:hover, .btn:hover {
-    background-color: #d35445; /* Color de fondo al pasar el ratón por botones */
+    background-color: #293241; /* Color de fondo al pasar el ratón por botones */
 }
 
 
@@ -311,8 +316,18 @@ i.ocultar{
     background-color: #f1f1f1;
 }
 
+.cart {
+    position: relative;
+}
 
-/* Ocultar el menú vertical en pantallas más anchas */
-@media (min-width: 710px) {
-   
+#cart-counter {
+    position: absolute;
+    top: -10px; /* Ajusta según sea necesario */
+    right: -10px; /* Ajusta según sea necesario */
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 5px;
+    font-size: 10px;
+    font-family: 'Roboto', sans-serif;
 }
