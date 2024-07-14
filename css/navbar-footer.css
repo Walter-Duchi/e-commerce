@@ -9,7 +9,7 @@ body {
     position: fixed;
     top: 0;
     left: -5px;
-    width: 97.5%;
+    width: 100%;
     background: #cfe3f1;
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -331,3 +331,28 @@ i.ocultar{
     font-size: 10px;
     font-family: 'Roboto', sans-serif;
 }
+/*se puede cambiar*/
+.navbar-links {
+    position: fixed;
+    top: 60px; /* Ajusta según la altura de la barra superior */
+    left: 0;
+    width: 100%;
+    background: #cfe3f1;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+}
+
+.nav-links a {
+    margin: 0 20px;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-links a.highlight {
+    color: #3d5a80;
+    font-weight: bold;
+}
+
