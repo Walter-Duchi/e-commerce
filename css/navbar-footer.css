@@ -8,8 +8,8 @@ body {
 .navbar {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: -5px;
+    width: 98%;
     background: #cfe3f1;
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -31,7 +31,7 @@ main{
     display: flex;
     align-items: center;
     flex-grow: 1;
-    margin: 0 20px;
+    margin: 0 5px;
 }
 
 .search-bar input {
@@ -108,7 +108,7 @@ main{
 }
 
 .dropdown-column a i {
-    margin-right: 10px;
+    margin-right: 0px;
 }
 
 .dropdown-column a:hover {
@@ -245,3 +245,40 @@ button:hover, .btn:hover {
     align-items: center;
 }
 
+.fa-solid.fa-bars {
+    margin-right: 20px; /* Ajusta el valor del margen según tus necesidades */
+}
+
+/*ocultar   */
+@media (max-width: 710px) {
+    a.ocultar {
+        display: none;
+    }
+    .profile .nombre {
+        display: none;
+    }
+    .categories{
+    display: none;
+}
+
+}
+
+@media (min-width: 710px) {
+
+
+i.ocultar{
+    display: none;
+}
+
+.ocultar{
+    display: none;
+}
+
+ .fa-solid.fa-bars {
+        display: none;
+}
+}
+
+
+    
+    

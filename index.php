@@ -12,9 +12,10 @@
     </head>
     <body>
         <nav class="navbar">
+            <i class="fa-solid fa-bars"></i> <!--Ocultar es cuando el ancho de la pantalla sea de 710px o menor-->
             <div class="logo">
                 <img src="assets/img/logo.png" alt="Logo">
-                <a href="#">Envios Express</a>
+                <a href="#" class="ocultar">Envios Express</a><!--Ocultar es cuando el ancho de la pantalla sea de 710px o menor-->
             </div>
             <div class="search-bar">
                 <input type="text" placeholder="Busca más de 10000 productos">
@@ -45,7 +46,7 @@
                     </div>
                 </div>
                 <a href="#" class="profile">
-                    <i class="fas fa-user"></i> Walter Duchi
+                    <i class="fas fa-user"></i> <span class="nombre">Walter Duchi</span><!--Ocultar el texto de Walter Duchi cuando el ancho de la pantalla sea de 710px o menor-->
                 </a>
                 <a href="#" class="cart">
                     <i class="fas fa-shopping-cart"></i>
