@@ -286,8 +286,8 @@ i.ocultar{
 
 .dropdown-vertical {
     display: none;
-    position: absolute;
-    top: 60px; /* Ajusta según sea necesario */
+    position: fixed; /* Cambiar de absolute a fixed */
+    top: 60px; /* Ajustar según sea necesario */
     left: 0;
     right: 0;
     background-color: #cfe3f1;
@@ -311,33 +311,6 @@ i.ocultar{
     background-color: #f1f1f1;
 }
 
-
-.dropdown-vertical {
-    display: none;
-    position: absolute;
-    top: 60px; 
-    left: 0;
-    right: 0;
-    background-color: #cfe3f1;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    width: 100%;
-    flex-direction: column;
-}
-
-.dropdown-vertical a {
-    padding: 5px 15px; /* Reducir padding para menos separación */
-    color: #333;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    font-family: 'Open Sans', sans-serif;
-}
-
-.dropdown-vertical a:hover {
-    background-color: #f1f1f1;
-}
 
 /* Ocultar el menú vertical en pantallas más anchas */
 @media (min-width: 710px) {
