@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendedor</title>
-    <link rel="stylesheet" href="css/navbar y footer.css">
+    <link rel="stylesheet" href="../css/navbar y footer.css">
     <style>
         .contenedor{
             padding: 20px;

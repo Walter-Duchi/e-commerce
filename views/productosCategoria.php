@@ -46,38 +46,9 @@
         </header>
         <main>
             <section class="productos">
-                <h2>Resultado de la busqueda</h2>
+                <h2>Categoria x</h2>
                 <div class="listaProductos">
                 <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/shoes.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
-                    <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/shoes.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
-                    <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/shoes.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
-                </div>
-            </section>
-            <section class="productos">
-                <h2>Productos más buscados</h2>
-                <div class="listaProductos">
-                    <div class="itemProducto">
                         <div class="verProducto" onclick="redirigir('producto.php')">
                             <img src="assets/img/shoes.png" alt="Nuevo Producto">
                             <p>Nuevo Producto</p>
