@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title></title>
+        <title>Dashboard</title>
         <link rel="stylesheet" href="css/navbar-footer.css">
         <style>
             .slider {
@@ -48,12 +48,12 @@
                 right: 10px;
             }
 
-            #servicios, .productos{
+            #servicios, .productos {
                 padding: 20px;
                 text-align: center;
             }
 
-            .serviciosOfrecidos, .listaProductos,.banner, .bannerPublicitario{
+            .serviciosOfrecidos, .listaProductos, .banner, .bannerPublicitario {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
@@ -78,12 +78,13 @@
                 padding: 30px;
             }
 
-            .bannerPublicitario img{
+            .bannerPublicitario img {
                 width: 500px;
                 height: auto;
                 margin-bottom: 10px;
                 position: relative;
             }
+
             .section {
                 flex: auto;
                 text-align: center;
@@ -95,7 +96,7 @@
                 margin-bottom: 10px;
             }
 
-            .section h3{
+            .section h3 {
                 margin-bottom: 10px;
                 font-size: 20px;
                 font-family: 'Open Sans', sans-serif;
@@ -114,7 +115,7 @@
                 border-radius: 10px;
             }
 
-            .itemProducto img{
+            .itemProducto img {
                 width: 150px;
                 height: auto;
             }
@@ -178,55 +179,24 @@
                     <div class="section">
                         <img src="assets/img/tarjeta.png" alt="Pago Seguro">
                         <h3>Pagos seguros</h3>
-                        <p>se aceptan todas las tarjetas</p>
+                        <p>Se aceptan todas las tarjetas</p>
                     </div>
                 </div>
             </section>
+
             <section class="productos">
                 <h2>Los más vendidos</h2>
+
                 <div class="listaProductos">
-                    <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
-                    <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
-                    <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
-                    <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
-                    <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
+                    <?php include 'components/itemProducto.php';?>
+                    <?php include 'components/itemProducto.php';?>
+                    <?php include 'components/itemProducto.php';?>
+                    <?php include 'components/itemProducto.php';?>
+                    <?php include 'components/itemProducto.php';?>
                 </div>
+                              
             </section>
+
             <div class="bannerPublicitario">
                 <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
                 <div>
@@ -234,82 +204,36 @@
                     <button onclick="redirigir('productosCategoria.php')">Comprar por categoría</button>
                 </div>
             </div>
+
             <section class="productos">
                 <h2>Los más populares</h2>
                 <div class="listaProductos">
-                    <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
-                    <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
-                    <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
-                    <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
+                    <?php include 'components/itemProducto.php';?>
+                    <?php include 'components/itemProducto.php';?>
+                    <?php include 'components/itemProducto.php';?>
+                    <?php include 'components/itemProducto.php';?>
+                    <?php include 'components/itemProducto.php';?>
                 </div>
             </section>
+
             <section class="productos">
                 <h2>Nuevos productos</h2>
                 <div class="listaProductos">
-                    <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
-                    <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
-                    <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
-                    <div class="itemProducto">
-                        <div class="verProducto" onclick="redirigir('producto.php')">
-                            <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
-                            <p>Nuevo Producto</p>
-                            <p>$10</p>
-                        </div>
-                        <button>Añadir al carrito</button>
-                    </div>
+                    <?php include 'components/itemProducto.php';?>
+                    <?php include 'components/itemProducto.php';?>
+                    <?php include 'components/itemProducto.php';?>
+                    <?php include 'components/itemProducto.php';?>
+                    <?php include 'components/itemProducto.php';?>
                 </div>
             </section>
 
             <script>
+                function redirigirProducto(event) {
+                    if (!event.target.closest('button')) {
+                        event.currentTarget.querySelector('.productoForm').submit();
+                    }
+                }
+
                 let diapoActual = 0;
 
                 function mostrarSlide(index) {
@@ -339,8 +263,5 @@
                 }
             </script>
         </main>
-
-
     </body>
 </html>
-

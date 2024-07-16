@@ -322,6 +322,10 @@ i.ocultar{
     position: relative;
 }
 
+button.cuenta{
+    border-radius: 0;
+}
+
 #cart-counter {
     position: absolute;
     top: -10px; /* Ajusta según sea necesario */
