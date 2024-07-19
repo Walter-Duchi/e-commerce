@@ -15,6 +15,7 @@
         </style>
     </head>
     <body>
+
         <?php include 'templates/header.html'; ?>
 
         <?php
@@ -30,5 +31,7 @@
         ?>
 
         <?php require 'templates/footer.html'; ?>
+        <?php require 'database/connection.php'; ?>
+
     </body>
 </html>
