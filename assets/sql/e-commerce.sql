@@ -342,7 +342,10 @@ VALUES
 ('Consolas'),
 ('Liquidación'),
 ('Tablets'),
-('Smartwatchs y Smartbands');
+('Smartwatchs y Smartbands'),
+('Lo más popular'),
+('Nuevos productos'),
+('Lo más vendido');
 
 -- Insertar datos de Productos
 INSERT INTO Productos (nombre, descripcion, precio, stock, imagen_url)
@@ -545,7 +548,13 @@ VALUES
 -- Tablets
 (121, 13), (122, 13), (123, 13), (124, 13), (125, 13), (126, 13), (127, 13), (128, 13), (129, 13), (130, 13),
 -- Smartwatchs y Smartbands
-(131, 14), (132, 14), (133, 14), (134, 14), (135, 14), (136, 14), (137, 14), (138, 14), (139, 14), (140, 14);
+(131, 14), (132, 14), (133, 14), (134, 14), (135, 14), (136, 14), (137, 14), (138, 14), (139, 14), (140, 14),
+-- Lo más popular
+(1, 15), (2, 15), (3, 15), (4, 15), (5, 15),
+-- Nuevos productos
+(6, 16), (7, 16), (8, 16), (9, 16), (10, 16),
+-- Lo más vendido
+(11, 17), (12, 17), (13, 17), (14, 17), (15, 17);
 
 -- Ver contenido de la tabla Rol
 SELECT * FROM Rol;
@@ -568,7 +577,8 @@ SELECT * FROM DatosBancarios;
 -- Ver contenido de la tabla Productos
 SELECT * FROM Productos;
 
--- Ver contenido de la tabla Categorias
+-- Ver contenido de la tabla Categorias;
+
 SELECT * FROM Categorias;
 
 -- Ver contenido de la tabla ProductoCategoria
