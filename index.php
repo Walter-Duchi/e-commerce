@@ -16,7 +16,7 @@
     </head>
     <body>
 
-        <?php include 'templates/header.html'; ?>
+        <?php include 'templates/header.php'; ?>
 
         <?php
         if (isset($_POST['cuenta'])) {
@@ -30,7 +30,7 @@
         }
         ?>
 
-        <?php require 'templates/footer.html'; ?>
+        <?php require 'templates/footer.php'; ?>
         <?php require 'database/connection.php'; ?>
 
     </body>
