@@ -82,7 +82,9 @@ $productos = $result->fetch_all(MYSQLI_ASSOC);
     </style>
 </head>
 <body>
-    <h1>Categoría: <?php echo htmlspecialchars($categoria); ?></h1>
+   
+    <main>
+        <h1>Categoría: <?php echo htmlspecialchars($categoria); ?></h1>
     <div class="productos listaProductos">
         <?php foreach ($productos as $producto): ?>
             <div class="itemProducto">
@@ -93,5 +95,6 @@ $productos = $result->fetch_all(MYSQLI_ASSOC);
             </div>
         <?php endforeach; ?>
     </div>
+    </main>
 </body>
 </html>
