@@ -39,22 +39,45 @@ $productos = $result->fetch_all(MYSQLI_ASSOC);
             flex-wrap: wrap;
             justify-content: center;
         }
+        .itemProducto {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            width: 180px;
+            text-align: center;
+            border-radius: 10px;
+            background-color: #1a1a1a;
+            color: #fff;
+        }
         .itemProducto img {
             width: 150px;
             height: 150px;
             object-fit: cover;
-            margin: 5px;
+            margin: 0 auto 10px auto;
         }
-        .itemProducto {
-            border: 1px solid #ccc;
-            padding: 20px;
-            margin: 5px;
-            width: 150px;
-            text-align: center;
-            border-radius: 10px;
+        .itemProducto h2 {
+            font-size: 1em;
+            margin: 10px 0;
+            flex-grow: 1;
         }
-        .verProducto {
+        .itemProducto p {
+            margin: 5px 0;
+        }
+        .botonAgregar {
+            padding: 5px 10px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
+            text-transform: uppercase;
+        }
+        .botonAgregar:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -65,9 +88,8 @@ $productos = $result->fetch_all(MYSQLI_ASSOC);
             <div class="itemProducto">
                 <img src="../assets/uploads/<?php echo htmlspecialchars($producto['imagen_url']); ?>" alt="Imagen del producto">
                 <h2><?php echo htmlspecialchars($producto['nombre']); ?></h2>
-                <p><?php echo htmlspecialchars($producto['descripcion']); ?></p>
                 <p>$<?php echo htmlspecialchars($producto['precio']); ?></p>
-                <button>Añadir al carrito</button>
+                <button class="botonAgregar">Añadir al carrito</button>
             </div>
         <?php endforeach; ?>
     </div>
