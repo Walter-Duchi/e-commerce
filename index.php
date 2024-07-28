@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="../css/navbar-footer.css">
         <link rel="stylesheet" href="../css/style.css">
         <link rel="stylesheet" href="css/style.css">
+        <script src="assets/js/scripts.js"></script> <!-- Incluir tu archivo JS -->
         <style>
             button.cuenta{
                 border-radius: 0;
@@ -23,7 +24,10 @@
 
         <!-- EL CONTENIDO DEBE CAMBIAR DE ACUERDO LO QUE SELECCIONE EL USUARIO -->
         <?php
-        if (isset($_POST['cuenta'])) {
+        if (isset($_GET['categoria'])) {
+            $categoria = $_GET['categoria'];
+            include('views/productosCategoria.php');
+        }elseif (isset($_POST['cuenta'])) {
             include 'redirects/sign-in-up.html';
         } elseif (isset($_POST['carrito'])) {
             include 'views/carrito.php';

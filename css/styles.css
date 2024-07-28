@@ -70,3 +70,15 @@ footer {
     width: 100%;
     bottom: 0;
 }
+
+.producto {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    display: inline-block;
+    width: 200px; /* Ajusta según sea necesario */
+}
+.producto img {
+    width: 100%;
+    height: auto;
+}
