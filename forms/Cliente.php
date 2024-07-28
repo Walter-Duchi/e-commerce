@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Registro</title>
+    <title>Formulario de Registro Cliente</title>
     <link rel="stylesheet" href="css/formularios.css">
 </head>
 <body>
-    
     <main>
         <section id="registro-cliente" class="form-section">
+            <a href="index.php" class="btn-back">Regresar al Inicio</a>
             <h1>Registro de datos Cliente</h1>
             <form action="/submit" method="post">
                 <label for="nombre">Nombre:</label>
@@ -36,6 +36,6 @@
                 <button type="submit">Crear Cuenta</button>
             </form>
         </section>
-
+    </main>
 </body>
 </html>
