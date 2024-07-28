@@ -38,8 +38,6 @@
             include('views/productosCategoria.php');
         }  elseif (isset($_POST['carrito'])) {
             include 'views/carrito.php';
-        } elseif (isset($_POST['verProducto'])) {
-            include 'views/producto.php';
         } else {
             include 'dashboards/Cliente-Registrado-NoRegistrado.php';
         }
