@@ -43,10 +43,12 @@
         $page = $_GET['page'];
         if ($page == 'detalleProducto' && isset($_GET['product_id'])) {
             include 'templates/DetalleProducto.php';
+        } elseif ($page == 'productosCategoria' && isset($_GET['categoria'])) {
+            include 'views/productosCategoria.php';
         } else {
             include 'views/404.php';
         }
-    }else {
+        }else {
             include 'dashboards/Cliente-Registrado-NoRegistrado.php';
         }
         
