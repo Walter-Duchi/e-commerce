@@ -15,7 +15,7 @@
             </div>
             <div class="redirect-content">
                 <button onclick="window.location.href='index.php?action=registro_cliente'">Registrarse como Cliente</button>
-                <button onclick="window.location.href='index.php?action=registro_encargado'">Registrarse como Vendedor</button>
+                <button onclick="window.location.href='index.php?action=registro_encargado'">Registrarse como Encargado Inventarios</button>
                 <button onclick="window.location.href='index.php?action=iniciar_sesion'">Iniciar Sesión</button>
                 <div class="back-to-home" onclick="window.location.href='index.php'">Regresar al Inicio</div>
             </div>

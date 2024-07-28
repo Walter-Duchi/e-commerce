@@ -10,6 +10,7 @@
     <main>
         <section id="login" class="form-section">
             <a href="index.php" class="btn-back">Regresar al Inicio</a>
+            <br>
             <h2>Iniciar Sesión</h2>
             <form action="../database/procesar_login.php" method="POST">
                 <label for="correo_electronico">Correo Electrónico:</label>

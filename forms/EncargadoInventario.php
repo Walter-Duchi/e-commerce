@@ -10,6 +10,7 @@
     <main>
         <section id="registro-inventario" class="form-section">
             <a href="index.php" class="btn-back">Regresar al Inicio</a>
+            <br>
             <h1>Registro de datos Encargado de Inventario</h1>
             <form action="/submit" method="post">
                 <label for="nombre">Nombre:</label>

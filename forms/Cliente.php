@@ -10,6 +10,7 @@
     <main>
         <section id="registro-cliente" class="form-section">
             <a href="index.php" class="btn-back">Regresar al Inicio</a>
+            <br>
             <h1>Registro de datos Cliente</h1>
             <form action="/submit" method="post">
                 <label for="nombre">Nombre:</label>
