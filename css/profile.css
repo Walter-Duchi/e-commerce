@@ -1,0 +1,97 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-container {
+    width: 80%;
+    margin: 50px auto;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.profile-header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 40px 30px;
+}
+
+.profile-header img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    margin-top: -36px;
+}
+
+.profile-header h1 {
+    margin: 10px 0 5px;
+}
+
+.profile-header p {
+    margin: 5px 0 20px;
+}
+
+.profile-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.profile-content .profile-details {
+    width: 70%;
+}
+
+.profile-content .profile-actions {
+    width: 25%;
+    text-align: center;
+}
+
+.profile-content .profile-details h2 {
+    margin-bottom: 10px;
+    color: #333;
+    border-bottom: 2px solid #f4f4f4;
+    padding-bottom: 5px;
+}
+
+.profile-content .profile-details ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.profile-content .profile-details ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.profile-content .profile-details ul li:last-child {
+    border-bottom: none;
+}
+
+.profile-content .profile-details ul li span {
+    font-weight: bold;
+    display: inline-block;
+    width: 150px;
+}
+
+.profile-content .profile-actions button {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.profile-content .profile-actions button:hover {
+    background-color: #555;
+}

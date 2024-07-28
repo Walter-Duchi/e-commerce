@@ -38,6 +38,7 @@
         }
         ?>
 
+        <link rel="stylesheet" href="css/navbar-footer.css">
         <!-- EL FOOTER SIEMPRE DEBE ESTAR -->
         <?php require 'templates/footer.php'; ?>
         <!-- LA CONEXION SIEMPRE DEBE ESTAR -->
