@@ -203,61 +203,52 @@ $productos_vendidos = obtenerProductosPorCategoria(17, $conn);
         </section>
 
         <section class="productos">
-            <h2>Los más populares</h2>
-            <div class="listaProductos">
-                <?php foreach ($productos_populares as $producto): ?>
-                    <div class="itemProducto" onclick="redirigirProducto(event)">
-                        <form method="POST" action="index.php" class="productoForm">
-                            <input type="hidden" name="verProducto" value="<?= $producto['id'] ?>">
-                            <div class="verProducto">
-                                <img src="assets/uploads/<?= $producto['imagen_url'] ?>" alt="<?= $producto['nombre'] ?>">
-                                <p><?= $producto['nombre'] ?></p>
-                                <p>$<?= $producto['precio'] ?></p>
-                            </div>
-                        </form>
-                        <button onclick="event.stopPropagation();">Añadir al carrito</button>
+        <h2>Los más populares</h2>
+        <div class="listaProductos">
+            <?php foreach ($productos_populares as $producto): ?>
+                <div class="itemProducto" onclick="window.location.href='index.php?page=detalleProducto&product_id=<?= $producto['id'] ?>'">
+                    <div class="verProducto">
+                        <img src="assets/uploads/<?= $producto['imagen_url'] ?>" alt="<?= $producto['nombre'] ?>">
+                        <p><?= $producto['nombre'] ?></p>
+                        <p>$<?= $producto['precio'] ?></p>
                     </div>
-                <?php endforeach; ?>
-            </div>
-        </section>
+                    <button onclick="event.stopPropagation();">Añadir al carrito</button>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </section>
 
-        <section class="productos">
-            <h2>Nuevos productos</h2>
-            <div class="listaProductos">
-                <?php foreach ($nuevos_productos as $producto): ?>
-                    <div class="itemProducto" onclick="redirigirProducto(event)">
-                        <form method="POST" action="index.php" class="productoForm">
-                            <input type="hidden" name="verProducto" value="<?= $producto['id'] ?>">
-                            <div class="verProducto">
-                                <img src="assets/uploads/<?= $producto['imagen_url'] ?>" alt="<?= $producto['nombre'] ?>">
-                                <p><?= $producto['nombre'] ?></p>
-                                <p>$<?= $producto['precio'] ?></p>
-                            </div>
-                        </form>
-                        <button onclick="event.stopPropagation();">Añadir al carrito</button>
+    <section class="productos">
+        <h2>Nuevos productos</h2>
+        <div class="listaProductos">
+            <?php foreach ($nuevos_productos as $producto): ?>
+                <div class="itemProducto" onclick="window.location.href='index.php?page=detalleProducto&product_id=<?= $producto['id'] ?>'">
+                    <div class="verProducto">
+                        <img src="assets/uploads/<?= $producto['imagen_url'] ?>" alt="<?= $producto['nombre'] ?>">
+                        <p><?= $producto['nombre'] ?></p>
+                        <p>$<?= $producto['precio'] ?></p>
                     </div>
-                <?php endforeach; ?>
-            </div>
-        </section>
+                    <button onclick="event.stopPropagation();">Añadir al carrito</button>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </section>
 
-        <section class="productos">
-            <h2>Lo más vendido</h2>
-            <div class="listaProductos">
-                <?php foreach ($productos_vendidos as $producto): ?>
-                    <div class="itemProducto" onclick="redirigirProducto(event)">
-                        <form method="POST" action="index.php" class="productoForm">
-                            <input type="hidden" name="verProducto" value="<?= $producto['id'] ?>">
-                            <div class="verProducto">
-                                <img src="assets/uploads/<?= $producto['imagen_url'] ?>" alt="<?= $producto['nombre'] ?>">
-                                <p><?= $producto['nombre'] ?></p>
-                                <p>$<?= $producto['precio'] ?></p>
-                            </div>
-                        </form>
-                        <button onclick="event.stopPropagation();">Añadir al carrito</button>
+    <section class="productos">
+        <h2>Lo más vendido</h2>
+        <div class="listaProductos">
+            <?php foreach ($productos_vendidos as $producto): ?>
+                <div class="itemProducto" onclick="window.location.href='index.php?page=detalleProducto&product_id=<?= $producto['id'] ?>'">
+                    <div class="verProducto">
+                        <img src="assets/uploads/<?= $producto['imagen_url'] ?>" alt="<?= $producto['nombre'] ?>">
+                        <p><?= $producto['nombre'] ?></p>
+                        <p>$<?= $producto['precio'] ?></p>
                     </div>
-                <?php endforeach; ?>
-            </div>
-        </section>
+                    <button onclick="event.stopPropagation();">Añadir al carrito</button>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </section>
         
         <div class="bannerPublicitario">
             <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
