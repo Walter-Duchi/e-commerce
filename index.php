@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="css/navbar-footer.css">
         <link rel="stylesheet" href="../css/navbar-footer.css">
         <link rel="stylesheet" href="../css/style.css">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/styles.css">        
         <script src="assets/js/scripts.js"></script> <!-- Incluir tu archivo JS -->
         <style>
             button.cuenta{
@@ -28,7 +28,7 @@
             $categoria = $_GET['categoria'];
             include('views/productosCategoria.php');
         }elseif (isset($_POST['cuenta'])) {
-            include 'redirects/sign-in-up.html';
+            include 'redirects/sign-in-up.php';
         } elseif (isset($_POST['carrito'])) {
             include 'views/carrito.php';
         } elseif (isset($_POST['verProducto'])) {

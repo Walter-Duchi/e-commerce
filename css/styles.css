@@ -1,84 +1,64 @@
+/* Estilos generales */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
 }
 
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 0;
-}
-
-main {
-    margin: 20px;
-}
-
-.form-section {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+/* Estilos para el contenedor de productos */
+.productos-contenedor {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
     padding: 20px;
 }
 
-.form-section h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    text-align: center;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-form label {
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-form input, form select, form textarea {
-    margin-bottom: 15px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-form button {
-    background-color: #28a745;
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-form button:hover {
-    background-color: #218838;
-}
-
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-}
-
+/* Estilos para cada producto */
 .producto {
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 15px;
     margin: 10px;
-    display: inline-block;
-    width: 200px; /* Ajusta según sea necesario */
+    width: 200px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
 }
+
+.producto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
 .producto img {
     width: 100%;
     height: auto;
+    margin-bottom: 10px;
+}
+
+.producto h3 {
+    font-size: 1.1em;
+    margin: 10px 0;
+}
+
+.producto p {
+    font-size: 1em;
+    color: #333;
+}
+
+.producto button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.producto button:hover {
+    background-color: #218838;
 }
