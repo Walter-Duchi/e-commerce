@@ -15,10 +15,13 @@
         </style>
     </head>
     <body>
-        <!-- EL HEADER SIEMPRE DEBE ESTAR -->
-        <?php include 'templates/header.php'; ?>
-        
-        <!-- CAMBIO DE CUERPO -->
+        <!-- EL NAVBAR SIEMPRE ESTA PERO CAMBIA DEPENDE DEL USUARIO -->
+        <!-- El navbar por defecto es de Cliente No Registrado -->
+        <?php include 'navbars/ClienteNoRegistrado.php'; ?>
+        <!-- php include 'navbars/ClienteRegistrado.php'; se debe -->
+        <!-- php include 'navbars/EncargadoInventarios'; -->
+
+        <!-- EL CONTENIDO DEBE CAMBIAR DE ACUERDO LO QUE SELECCIONE EL USUARIO -->
         <?php
         if (isset($_POST['cuenta'])) {
             include 'redirects/sign-in-up.html';
