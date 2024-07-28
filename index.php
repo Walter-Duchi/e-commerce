@@ -15,22 +15,25 @@
         </style>
     </head>
     <body>
-
+        <!-- EL HEADER SIEMPRE DEBE ESTAR -->
         <?php include 'templates/header.php'; ?>
-
+        
+        <!-- CAMBIO DE CUERPO -->
         <?php
         if (isset($_POST['cuenta'])) {
             include 'redirects/sign-in-up.html';
         } elseif (isset($_POST['carrito'])) {
             include 'views/carrito.php';
         } elseif (isset($_POST['verProducto'])) {
-            include 'views/producto.php';
+            include 'views/producto.php';  
         } else {
             include 'dashboards/Cliente-Registrado-NoRegistrado.php';
         }
         ?>
 
+        <!-- EL FOOTER SIEMPRE DEBE ESTAR -->
         <?php require 'templates/footer.php'; ?>
+        <!-- LA CONEXION SIEMPRE DEBE ESTAR -->
         <?php require 'database/connection.php'; ?>
 
     </body>

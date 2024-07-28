@@ -12,53 +12,37 @@
     </head>
     <body>
         <nav class="navbar">
-            <i class="fa-solid fa-bars" id="menu-toggle"></i> <!--Ocultar es cuando el ancho de la pantalla sea de 710px o menor-->
+            <i class="fa-solid fa-bars" id="menu-toggle"></i>
             <div class="logo">
-                <img src="../assets/img/logo.png" alt="Logo">
-                <a href="#" class="ocultar">Envios Express</a><!--Ocultar es cuando el ancho de la pantalla sea de 710px o menor-->
+                <a href="index.php">
+                    <img src="assets/img/logo.png" alt="Logo">
+                    <a href="index.php" class="ocultar">Envios Express</a>
+                </a>
             </div>
             <div class="search-bar">
                 <input type="text" placeholder="Busca más de 10000 productos">
                 <button><i class="fas fa-search"></i></button>
             </div>
             <div class="nav-links">
-                <div class="categories">
-                    <span class="espacio-derecha">Categorías</span>
-                    <div class="dropdown">
-                        <div class="dropdown-column">
-                            <a href="#"><i class="fas fa-tags"></i> Ofertas</a>
-                            <a href="#"><i class="fas fa-headphones"></i> Audio y Video</a>
-                            <a href="#"><i class="fas fa-tv"></i> Televisores</a>
-                            <a href="#"><i class="fas fa-chart-line"></i> Tendencia</a>
-                            <a href="#"><i class="fas fa-home"></i> Hogar</a>
-                            <a href="#"><i class="fas fa-laptop"></i> Computadoras</a>
-                            <a href="#"><i class="fas fa-heartbeat"></i> Salud</a>
-                        </div>
-                        <div class="dropdown-column">
-                            <a href="#"><i class="fas fa-briefcase"></i> Oficina</a>
-                            <a href="#"><i class="fas fa-gamepad"></i> Ocio</a>
-                            <a href="#"><i class="fas fa-mobile-alt"></i> Celulares</a>
-                            <a href="#"><i class="fas fa-gamepad"></i> Consolas</a>
-                            <a href="#"><i class="fas fa-percent"></i> Liquidación</a>
-                            <a href="#"><i class="fas fa-tablet-alt"></i> Tablets</a>
-                            <a href="#"><i class="fas fa-clock"></i> Smartwatchs y Smartbands</a>
-                        </div>
+                <?php require 'templates/categories.php'?>
+                <form method="POST" action="index.php">
+                    <button type="submit" name="cuenta" class="cuenta">
+                        <i class="fas fa-user"></i> <span class="cuenta"> Acceder con cuenta</span>
+                    </button>
+                </form> 
+
+                <form method="POST" action="index.php" id="carritoForm">
+                    <div class="espacio-derecho" class="Carrito-Contador" onclick="document.getElementById('carritoForm').submit();">
+                        <a href="#" class="cart">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cart-counter">1</span> <!-- Contador del carrito -->
+                        </a>
                     </div>
-                </div>
-                <button class="cuenta">
-                    <i class="fas fa-user"></i> <span class="cuenta"> Acceder con cuenta</span><!--Ocultar el texto "Acceder con cuenta" cuando el ancho de la pantalla sea de 710px o menor-->
-                </button>
-                <div class="espacio-derecho">
-
-                    <a href="#" class="cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span id="cart-counter">1</span> <!-- Contador del carrito -->
-                    </a>
-
-                </div>
+                    <input type="hidden" name="carrito" value="1">
+                </form>
             </div>
         </nav>
 
-        <script src="js/navbar.js"></script>
+        <script src="assets/js/navbar.js"></script>
     </body>
 </html>
