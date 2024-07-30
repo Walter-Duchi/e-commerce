@@ -3,34 +3,28 @@
 
 if (isset($_GET['product_id'])) {
     $product_id = $_GET['product_id'];
-    $query = "
-        SELECT 
-            p.nombre, 
-            p.descripcion, 
-            p.precio, 
-            p.stock, 
-            p.imagen_url,
-            c.nombre AS categoria 
-        FROM 
-            Productos p
-        LEFT JOIN 
-            ProductoCategoria pc ON p.id = pc.id_producto
-        LEFT JOIN 
-            Categorias c ON pc.id_categoria = c.id
-        WHERE 
-            p.id = $product_id";
-    $result = mysqli_query($conn, $query);
+    require_once('database/connection.php');
 
-    if ($result && mysqli_num_rows($result) > 0) {
-        $product = mysqli_fetch_assoc($result);
+    $query = $conn->prepare('
+        SELECT p.id, p.nombre, p.descripcion, p.precio, p.stock, p.imagen_url, c.nombre AS categoria 
+        FROM Productos p 
+        LEFT JOIN ProductoCategoria pc ON p.id = pc.id_producto 
+        LEFT JOIN Categorias c ON pc.id_categoria = c.id 
+        WHERE p.id = ?
+    ');
+    $query->bind_param('i', $product_id);
+    $query->execute();
+    $result = $query->get_result();
+
+    if ($result && $result->num_rows > 0) {
+        $product = $result->fetch_assoc();
         ?>
         <!DOCTYPE html>
         <html lang="es">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Detalles del Producto</title>
-            <link rel="stylesheet" href="css/navbar-footer.css">
+            <title><?php echo $product['nombre']; ?></title>
             <style>
                 .infoProducto {
                     display: flex;
@@ -132,21 +126,17 @@ if (isset($_GET['product_id'])) {
                     <div class="infoCompra">
                         <p class="disponibilidad"><?php echo $product['stock'] > 0 ? 'Disponible' : 'Agotado'; ?></p>
                         <p>$<?php echo $product['precio']; ?></p>
-                        <button onclick="redirigir('carrito.php')">Agregar al carrito</button>
+                        <button onclick="agregarAlCarrito(<?php echo $product['id']; ?>)">Agregar al carrito</button>
                     </div>
                 </div>
                 <div class="contenedor">
                     <section class="resena">
                         <h2>Foro del producto</h2>
-                        <!-- Aquí puedes agregar código PHP para mostrar las reseñas del producto -->
+                        <!-- Aquí se pueden agregar comentarios y reseñas del producto -->
                     </section>
-                </div>
+                </div> 
             </main>
-            <script>
-                function redirigir(url) {
-                    window.location.href = url;
-                }
-            </script>
+            <script src="../assets/js/carrito.js"></script>
         </body>
         </html>
         <?php

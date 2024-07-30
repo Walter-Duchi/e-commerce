@@ -1,16 +1,12 @@
 <?php
-$servername = "localhost";
-$username = "root"; // Cambia esto si tienes un usuario diferente
-$password = ""; // Cambia esto si tienes una contraseña diferente
-$dbname = "ecommerce";
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Conexión a la base de datos
+$conn = new mysqli("localhost", "root", "", "ecommerce");
 
-// Verificar conexión
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
-return $conn;
 ?>

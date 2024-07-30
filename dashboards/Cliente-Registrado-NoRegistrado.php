@@ -135,6 +135,7 @@ $productos_vendidos = obtenerProductosPorCategoria(17, $conn);
                 width: 150px;
                 text-align: center;
                 border-radius: 10px;
+                cursor: pointer;
             }
 
             .itemProducto img {
@@ -160,139 +161,154 @@ $productos_vendidos = obtenerProductosPorCategoria(17, $conn);
                 background-color: #98c1d9;
             }
         </style>
-    </head>
-    <body>
-<main>
-        <!-- Slider -->
-        <div class="slider">
-            <div class="slides">
-                <div class="slide"><img src="assets/img/camera.png" alt="itemSlide"></div>
-                <div class="slide"><img src="assets/img/headphone.png" alt="itemSSlide"></div>
-                <div class="slide"><img src="assets/img/electronic.png" alt="itemSlide"></div>
-                <div class="slide"><img src="assets/img/phone.png" alt="itemSlide"></div>
-            </div>
-            <!-- Botones para mover de promociones -->
-            <button class="prev" onclick="moverSlide(-1)">&#10094;</button>
-            <button class="sgn" onclick="moverSlide(1)">&#10095;</button>
-        </div>
-
-        <section id="servicios">
-            <h2>Ofrecemos</h2>
-            <div class="banner">
-                <div class="section">
-                    <img src="assets/img/transporte.png" alt="Envío gratuito">
-                    <h3>Envío gratuito</h3>
-                    <p>En compras superiores a $50</p>
-                </div>
-                <div class="section">
-                    <img src="assets/img/dolar.png" alt="Garantía de devolución de dinero">
-                    <h3>Garantía de devolución de dinero</h3>
-                    <p>30 días de garantía</p>
-                </div>
-                <div class="section">
-                    <img src="assets/img/auriculares.png" alt="Soporte técnico">
-                    <h3>Soporte técnico</h3>
-                    <p>24 horas de soporte</p>
-                </div>
-                <div class="section">
-                    <img src="assets/img/tarjeta.png" alt="Pago Seguro">
-                    <h3>Pagos seguros</h3>
-                    <p>Se aceptan todas las tarjetas</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="productos">
-        <h2>Los más populares</h2>
-        <div class="listaProductos">
-            <?php foreach ($productos_populares as $producto): ?>
-                <div class="itemProducto" onclick="window.location.href='index.php?page=detalleProducto&product_id=<?= $producto['id'] ?>'">
-                    <div class="verProducto">
-                        <img src="assets/uploads/<?= $producto['imagen_url'] ?>" alt="<?= $producto['nombre'] ?>">
-                        <p><?= $producto['nombre'] ?></p>
-                        <p>$<?= $producto['precio'] ?></p>
-                    </div>
-                    <button onclick="event.stopPropagation();">Añadir al carrito</button>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </section>
-
-    <section class="productos">
-        <h2>Nuevos productos</h2>
-        <div class="listaProductos">
-            <?php foreach ($nuevos_productos as $producto): ?>
-                <div class="itemProducto" onclick="window.location.href='index.php?page=detalleProducto&product_id=<?= $producto['id'] ?>'">
-                    <div class="verProducto">
-                        <img src="assets/uploads/<?= $producto['imagen_url'] ?>" alt="<?= $producto['nombre'] ?>">
-                        <p><?= $producto['nombre'] ?></p>
-                        <p>$<?= $producto['precio'] ?></p>
-                    </div>
-                    <button onclick="event.stopPropagation();">Añadir al carrito</button>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </section>
-
-    <section class="productos">
-        <h2>Lo más vendido</h2>
-        <div class="listaProductos">
-            <?php foreach ($productos_vendidos as $producto): ?>
-                <div class="itemProducto" onclick="window.location.href='index.php?page=detalleProducto&product_id=<?= $producto['id'] ?>'">
-                    <div class="verProducto">
-                        <img src="assets/uploads/<?= $producto['imagen_url'] ?>" alt="<?= $producto['nombre'] ?>">
-                        <p><?= $producto['nombre'] ?></p>
-                        <p>$<?= $producto['precio'] ?></p>
-                    </div>
-                    <button onclick="event.stopPropagation();">Añadir al carrito</button>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </section>
-        
-        <div class="bannerPublicitario">
-            <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
-            <div>
-                <h2>Obten un descuento en tu primera orden de $20</h2>
-                <button onclick="redirigir('productosCategoria.php')">Comprar por categoría</button>
-            </div>
-        </div>
-
         <script>
-            function redirigirProducto(event) {
-                if (!event.target.closest('button')) {
-                    event.currentTarget.querySelector('.productoForm').submit();
-                }
+            function redirigirProducto(productId) {
+                window.location.href = `index.php?page=detalleProducto&product_id=${productId}`;
             }
-
-            let diapoActual = 0;
-
-            function mostrarSlide(index) {
-                const slides = document.querySelector('.slides');
-                const totalSlides = slides.children.length;
-                if (index >= totalSlides) {
-                    diapoActual = 0;
-                } else if (index < 0) {
-                    diapoActual = totalSlides - 1;
-                } else {
-                    diapoActual = index;
-                }
-                const desactivar = -diapoActual * 100;
-                slides.style.transform = `translateX(${desactivar}%)`;
-            }
-
-            function moverSlide(step) {
-                mostrarSlide(diapoActual + step);
-            }
-
-            document.addEventListener('DOMContentLoaded', () => {
-                mostrarSlide(diapoActual);
-            });
-
-            function redirigir(url) {
-                window.location.href = url;
+            function agregarAlCarrito(productId) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'database/add_to_cart.php';
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'product_id';
+                input.value = productId;
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
             }
         </script>
-    </main>
+    </head>
+    <body>
+        <main>
+            <!-- Slider -->
+            <div class="slider">
+                <div class="slides">
+                    <div class="slide"><img src="assets/img/camera.png" alt="itemSlide"></div>
+                    <div class="slide"><img src="assets/img/headphone.png" alt="itemSSlide"></div>
+                    <div class="slide"><img src="assets/img/electronic.png" alt="itemSlide"></div>
+                    <div class="slide"><img src="assets/img/phone.png" alt="itemSlide"></div>
+                </div>
+                <!-- Botones para mover de promociones -->
+                <button class="prev" onclick="moverSlide(-1)">&#10094;</button>
+                <button class="sgn" onclick="moverSlide(1)">&#10095;</button>
+            </div>
+
+            <section id="servicios">
+                <h2>Ofrecemos</h2>
+                <div class="banner">
+                    <div class="section">
+                        <img src="assets/img/transporte.png" alt="Envío gratuito">
+                        <h3>Envío gratuito</h3>
+                        <p>En compras superiores a $50</p>
+                    </div>
+                    <div class="section">
+                        <img src="assets/img/dolar.png" alt="Garantía de devolución de dinero">
+                        <h3>Garantía de devolución de dinero</h3>
+                        <p>30 días de garantía</p>
+                    </div>
+                    <div class="section">
+                        <img src="assets/img/auriculares.png" alt="Soporte técnico">
+                        <h3>Soporte técnico</h3>
+                        <p>24 horas de soporte</p>
+                    </div>
+                    <div class="section">
+                        <img src="assets/img/tarjeta.png" alt="Pago Seguro">
+                        <h3>Pagos seguros</h3>
+                        <p>Se aceptan todas las tarjetas</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="productos">
+                <h2>Los más populares</h2>
+                <div class="listaProductos">
+                    <?php foreach ($productos_populares as $producto): ?>
+                        <div class="itemProducto" onclick="redirigirProducto(<?php echo $producto['id']; ?>)">
+                            <div class="verProducto">
+                                <img src="assets/uploads/<?php echo $producto['imagen_url']; ?>" alt="<?php echo $producto['nombre']; ?>">
+                                <p><?php echo $producto['nombre']; ?></p>
+                                <p>$<?php echo $producto['precio']; ?></p>
+                            </div>
+                            <button type="button" onclick="event.stopPropagation(); agregarAlCarrito(<?php echo $producto['id']; ?>)">Agregar al carrito</button>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </section>
+
+            <section class="productos">
+                <h2>Nuevos productos</h2>
+                <div class="listaProductos">
+                    <?php foreach ($nuevos_productos as $producto): ?>
+                        <div class="itemProducto" onclick="redirigirProducto(<?php echo $producto['id']; ?>)">
+                            <div class="verProducto">
+                                <img src="assets/uploads/<?php echo $producto['imagen_url']; ?>" alt="<?php echo $producto['nombre']; ?>">
+                                <p><?php echo $producto['nombre']; ?></p>
+                                <p>$<?php echo $producto['precio']; ?></p>
+                            </div>
+                            <button type="button" onclick="event.stopPropagation(); agregarAlCarrito(<?php echo $producto['id']; ?>)">Agregar al carrito</button>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </section>
+
+            <section class="productos">
+                <h2>Lo más vendido</h2>
+                <div class="listaProductos">
+                    <?php foreach ($productos_vendidos as $producto): ?>
+                        <div class="itemProducto" onclick="redirigirProducto(<?php echo $producto['id']; ?>)">
+                            <div class="verProducto">
+                                <img src="assets/uploads/<?php echo $producto['imagen_url']; ?>" alt="<?php echo $producto['nombre']; ?>">
+                                <p><?php echo $producto['nombre']; ?></p>
+                                <p>$<?php echo $producto['precio']; ?></p>
+                            </div>
+                            <button type="button" onclick="event.stopPropagation(); agregarAlCarrito(<?php echo $producto['id']; ?>)">Agregar al carrito</button>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </section>
+            
+            <div class="bannerPublicitario">
+                <img src="assets/img/promocionMueble.png" alt="Nuevo Producto">
+                <div>
+                    <h2>Obten un descuento en tu primera orden de $20</h2>
+                    <button onclick="redirigir('views/productosCategoria.php')">Comprar por categoría</button>
+                </div>
+            </div>
+
+            <script>
+                function redirigirProducto(productId) {
+                    window.location.href = `index.php?page=detalleProducto&product_id=${productId}`;
+                }
+
+                let diapoActual = 0;
+
+                function mostrarSlide(index) {
+                    const slides = document.querySelector('.slides');
+                    const totalSlides = slides.children.length;
+                    if (index >= totalSlides) {
+                        diapoActual = 0;
+                    } else if (index < 0) {
+                        diapoActual = totalSlides - 1;
+                    } else {
+                        diapoActual = index;
+                    }
+                    const desactivar = -diapoActual * 100;
+                    slides.style.transform = `translateX(${desactivar}%)`;
+                }
+
+                function moverSlide(step) {
+                    mostrarSlide(diapoActual + step);
+                }
+
+                document.addEventListener('DOMContentLoaded', () => {
+                    mostrarSlide(diapoActual);
+                });
+
+                function redirigir(url) {
+                    window.location.href = url;
+                }
+            </script>
+        </main>
     </body>
 </html>

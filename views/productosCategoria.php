@@ -40,30 +40,20 @@
             background-color: #98c1d9;
         }
     </style>
-    <script>
-        function redirigirProducto(productId) {
-            window.location.href = `index.php?page=detalleProducto&product_id=${productId}`;
-        }
-        function agregarAlCarrito(productId) {
-            // Implementar la lógica para agregar al carrito
-            alert(`Producto ${productId} agregado al carrito.`);
-        }
-    </script>
 </head>
 <body>
     <main>
         <?php
         $categoria = $_GET['categoria'];
-
         require_once('database/connection.php');
 
-        $query = $conn->prepare(
-            'SELECT p.id, p.nombre, p.descripcion, p.precio, p.imagen_url 
-             FROM Productos p 
-             INNER JOIN ProductoCategoria pc ON p.id = pc.id_producto 
-             INNER JOIN Categorias c ON pc.id_categoria = c.id 
-             WHERE c.nombre = ?'
-        );
+        $query = $conn->prepare('
+            SELECT p.id, p.nombre, p.descripcion, p.precio, p.imagen_url 
+            FROM Productos p 
+            INNER JOIN ProductoCategoria pc ON p.id = pc.id_producto 
+            INNER JOIN Categorias c ON pc.id_categoria = c.id 
+            WHERE c.nombre = ?
+        ');
         $query->bind_param('s', $categoria);
         $query->execute();
         $result = $query->get_result();
@@ -85,5 +75,11 @@
         $conn->close();
         ?>
     </main>
+    <script src="../assets/js/carrito.js"></script>
+    <script>
+        function redirigirProducto(productId) {
+            window.location.href = `index.php?page=detalleProducto&product_id=${productId}`;
+        }
+    </script>
 </body>
 </html>

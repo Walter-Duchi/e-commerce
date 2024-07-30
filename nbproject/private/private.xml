@@ -3,7 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/xampp/htdocs/e-commerce/database/add_to_cart.php</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/navbars/ClienteRegistrado.php</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/views/productosBuscados.php</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/database/get_cart_count.php</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/assets/sql/e-commerce.sql</file>
             <file>file:/C:/xampp/htdocs/e-commerce/redirects/sign-in-up.php</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/database/connection.php</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/navbars/ClienteNoRegistrado.php</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/assets/js/carrito.js</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/views/carrito.php</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/dashboards/EncargadoInventarios.php</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/views/productosCategoria.php</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/index.php</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/navbars/EncargadoInventarios.php</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/templates/DetalleProducto.php</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/templates/carrito.php</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/dashboards/Cliente-Registrado-NoRegistrado.php</file>
+            <file>file:/C:/xampp/htdocs/e-commerce/templates/categories.php</file>
         </group>
     </open-files>
 </project-private>
