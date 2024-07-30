@@ -80,6 +80,19 @@
         function redirigirProducto(productId) {
             window.location.href = `index.php?page=detalleProducto&product_id=${productId}`;
         }
+        
+        function agregarAlCarrito(productId) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'database/add_to_cart.php';
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'product_id';
+                input.value = productId;
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
     </script>
 </body>
 </html>
