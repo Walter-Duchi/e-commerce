@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $apellido = trim($_POST['apellido']);
     $telefono = trim($_POST['telefono']);
     $correo_personal = trim($_POST['correo_personal']);
-    $contrasena = trim($_POST['contrasena']);
+    $contrasena = trim($_POST['contrasena']); // Contraseña en texto plano
 
     // Validación básica
     if (empty($nombre) || empty($apellido) || empty($telefono) || empty($correo_personal) || empty($contrasena)) {

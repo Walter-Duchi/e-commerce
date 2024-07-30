@@ -12,7 +12,7 @@
             <a href="index.php" class="btn-back">Regresar al Inicio</a>
             <br>
             <h1>Registro de datos Encargado de Inventario</h1>
-            <form action="/submit" method="post">
+            <form action="database/registrer_encargado_inventario.php" method="post">
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" maxlength="100" required>
                 <label for="apellido">Apellido:</label>
