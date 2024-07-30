@@ -34,20 +34,20 @@ session_start();
         } elseif ($action == 'iniciar_sesion') {
             include 'forms/login.php';
         }
-    } elseif (isset($_GET['page'])) {
-        $page = $_GET['page'];
-        if ($page == 'detalleProducto' && isset($_GET['product_id'])) {
-            include 'templates/DetalleProducto.php';
-        } else {
-            include 'views/404.php';
-        }
     } else {
         include 'navbars/ClienteNoRegistrado.php'; // or ClienteRegistrado.php based on session or login status
 
         if (isset($_GET['categoria'])) {
             $categoria = $_GET['categoria'];
             include('views/productosCategoria.php');
-        } elseif (isset($_POST['carrito'])) {
+        }elseif (isset($_GET['page'])) {
+        $page = $_GET['page'];
+        if ($page == 'detalleProducto' && isset($_GET['product_id'])) {
+            include 'templates/DetalleProducto.php';
+        } else {
+            include 'views/404.php';
+        }
+        }elseif (isset($_POST['carrito'])) {
             include 'views/carrito.php';
         } else {
             include 'dashboards/Cliente-Registrado-NoRegistrado.php';
