@@ -9,14 +9,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sexo = trim($_POST['sexo']);
     $fecha_nacimiento = trim($_POST['fecha_nacimiento']);
     $documento_identidad = trim($_POST['documento_identidad']);
-    $contrasena = trim($_POST['contrasena']);
+    $contrasena = trim($_POST['contrasena']); // Contraseña en texto plano
     $correo_electronico = trim($_POST['correo_electronico']);
     $ubicacion = trim($_POST['ubicacion']);
 
     // Validación básica
     if (empty($nombre) || empty($apellido) || empty($documento_identidad) || empty($contrasena) || empty($correo_electronico) || empty($ubicacion)) {
         $error = "Todos los campos son obligatorios.";
-        echo "<script>alert('$error'); window.history.back();</script>";;
+        echo "<script>alert('$error'); window.history.back();</script>";
     } else {
         // Verificar si el correo electrónico ya existe
         $sql = "SELECT id FROM ClienteRegistrado WHERE correo_electronico = ?";
@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $error = "El documento de identidad ya está en uso.";
                 echo "<script>alert('$error'); window.history.back();</script>";
             } else {
-                //insertar el nuevo usuario en la base de datos
+                // Insertar el nuevo usuario en la base de datos
                 $sql = "INSERT INTO ClienteRegistrado (nombre, apellido, edad, sexo, fecha_nacimiento, documento_identidad, contrasena, correo_electronico, ubicacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("ssissssss", $nombre, $apellido, $edad, $sexo, $fecha_nacimiento, $documento_identidad, $contrasena, $correo_electronico, $ubicacion);
