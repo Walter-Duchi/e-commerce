@@ -57,7 +57,10 @@ $stmt->close();
                     <?php foreach ($productos_carrito as $producto): ?>
                         <li>
                             <?php echo $producto['nombre']; ?> - $<?php echo $producto['precio']; ?> x <?php echo $producto['cantidad']; ?>
-                            <button class="remove-item" data-id="<?php echo $producto['id']; ?>">Eliminar</button>
+                            <form action="../database/eliminar_producto.php" method="post" style="display:inline;">
+                                <input type="hidden" name="id_producto" value="<?php echo $producto['id']; ?>">
+                                <button type="submit">Eliminar</button>
+                            </form>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -68,33 +71,5 @@ $stmt->close();
         </div>
         <a href="../index.php">Volver a la tienda</a>
     </main>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-    $(document).ready(function() {
-        $('.remove-item').click(function() {
-            var productId = $(this).data('id');
-            $.post('../database/remove_from_cart.php', { product_id: productId }, function(response) {
-                var data = JSON.parse(response);
-                if (data.status === 'success') {
-                    location.reload();
-                } else {
-                    alert('No se pudo eliminar el producto del carrito.');
-                }
-            });
-        });
-
-        $('#clear-cart').click(function() {
-            $.post('../database/clear_cart.php', function(response) {
-                var data = JSON.parse(response);
-                if (data.status === 'success') {
-                    location.reload();
-                } else {
-                    alert('No se pudo vaciar el carrito.');
-                }
-            });
-        });
-    });
-    </script>
 </body>
 </html>
