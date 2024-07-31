@@ -36,10 +36,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Si el producto no está en el carrito, insertarlo
         $insert_sql = "INSERT INTO CarritoCompra (id_cliente, id_cliente_no_registrado, id_producto, cantidad) VALUES (?, ?, ?, ?)";
         $insert_stmt = $conn->prepare($insert_sql);
+        $null = NULL; // Variable para pasar como parámetro NULL
         if (isset($_SESSION['user_id'])) {
-            $insert_stmt->bind_param("iiii", $user_id, NULL, $product_id, $cantidad);
+            $insert_stmt->bind_param("iiii", $user_id, $null, $product_id, $cantidad);
         } else {
-            $insert_stmt->bind_param("iiii", NULL, $user_id, $product_id, $cantidad);
+            $insert_stmt->bind_param("iiii", $null, $user_id, $product_id, $cantidad);
         }
         $insert_stmt->execute();
         $insert_stmt->close();
