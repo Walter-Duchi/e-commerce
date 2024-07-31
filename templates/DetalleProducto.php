@@ -1,5 +1,5 @@
 <?php
-// templates/DetalleProducto.php
+session_start();
 
 if (isset($_GET['product_id'])) {
     $product_id = $_GET['product_id'];
@@ -113,7 +113,12 @@ if (isset($_GET['product_id'])) {
             </style>
         </head>
         <body>
-            <header></header>
+            <header>
+                <nav>
+                    <!-- Aquí se coloca el menú de navegación -->
+                    <span class="nombre"><?php echo $_SESSION['nombre'] ?? 'Invitado'; ?></span>
+                </nav>
+            </header>
             <main>
                 <div class="infoProducto">
                     <img src="assets/uploads/<?php echo $product['imagen_url']; ?>" alt="<?php echo $product['nombre']; ?>">
@@ -132,7 +137,35 @@ if (isset($_GET['product_id'])) {
                 <div class="contenedor">
                     <section class="resena">
                         <h2>Chat relacionado con este producto</h2>
-                        <!-- Aquí se pueden agregar comentarios y reseñas del producto -->
+                        <?php if (isset($_SESSION['tipo_usuario']) && in_array($_SESSION['tipo_usuario'], ['cliente', 'encargado'])): ?>
+                            <div id="chat">
+                                <?php
+                                $query = $conn->prepare('
+                                    SELECT mf.id, mf.nombre_usuario, mf.mensaje, mf.fecha 
+                                    FROM MensajesForo mf 
+                                    WHERE mf.id_producto = ? 
+                                    ORDER BY mf.fecha DESC
+                                ');
+                                $query->bind_param('i', $product_id);
+                                $query->execute();
+                                $result = $query->get_result();
+
+                                while ($message = $result->fetch_assoc()) {
+                                    echo "<div class='mensaje'>";
+                                    echo "<p><strong>" . $message['nombre_usuario'] . ":</strong> " . $message['mensaje'] . "</p>";
+                                    echo "<p><small>" . $message['fecha'] . "</small></p>";
+                                    echo "</div>";
+                                }
+                                ?>
+                            </div>
+                            <form action="database/enviarMensaje.php" method="post">
+                                <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+                                <textarea name="mensaje" required></textarea>
+                                <button type="submit">Enviar</button>
+                            </form>
+                        <?php else: ?>
+                            <p>Solo los usuarios registrados y los encargados de inventarios pueden participar en el chat.</p>
+                        <?php endif; ?>
                     </section>
                 </div> 
             </main>
