@@ -46,7 +46,7 @@ if (isset($_SESSION['user_id'])) {
             <a href="#" class="profile">
                 <i class="fas fa-user"></i> 
                 <?php 
-                echo '<span class="nombre">' .$_SESSION['apellido'] . '</span>';
+                echo '<span class="nombre">'.$_SESSION['nombre_usuario'].' '.$_SESSION['apellido'] . '</span>';
                 echo '<a href="database/logout.php">Salir</a>';
                 ?>
             </a>
