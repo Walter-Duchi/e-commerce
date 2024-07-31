@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once 'database/connection.php';
 
 $total_products = 0;
@@ -33,7 +32,7 @@ if (isset($_SESSION['user_id'])) {
     <nav class="navbar">
         <i class="fa-solid fa-bars" id="menu-toggle"></i> <!--Ocultar es cuando el ancho de la pantalla sea de 710px o menor-->
         <div class="logo">
-            <img src="../assets/img/logo.png" alt="Logo">
+            <img src="assets/img/logo.png" alt="Logo">
             <a href="#" class="ocultar">Envios Express</a><!--Ocultar es cuando el ancho de la pantalla sea de 710px o menor-->
         </div>
         <div class="search-bar">
@@ -68,8 +67,8 @@ if (isset($_SESSION['user_id'])) {
                 <i class="fas fa-user"></i> 
                 <?php 
                 echo '<span class="nombre">' . $_SESSION['nombre'] . ' ' . $_SESSION['apellido'] . '</span>';
-                echo '<li><a href="database/logout.php">Salir</a></li>';
-                ?><!--Ocultar el texto de Walter Duchi cuando el ancho de la pantalla sea de 710px o menor-->
+                echo '<a href="database/logout.php">Salir</a>';
+                ?>
             </a>
             <div class="espacio-derecho" onclick="location.href='templates/carrito.php'">
                 <a href="#" class="cart">
