@@ -61,7 +61,6 @@ $stmt->close();
                         </li>
                     <?php endforeach; ?>
                 </ul>
-                <button id="clear-cart">Vaciar Carrito</button>
                 <?php if (!isset($_SESSION['user_id'])): ?>
                     <a href="../forms/PagoClienteNoRegistrado.php" class="button">Proceder al Pago</a>
                 <?php endif; ?>
