@@ -184,9 +184,9 @@ $productos_vendidos = obtenerProductosPorCategoria(17, $conn);
     <?php
         if (isset($_SESSION['id_usuario'])) {
             $user_id = $_SESSION['id_usuario'];
-            echo "User ID: " . htmlspecialchars($user_id, ENT_QUOTES, 'UTF-8');
+            echo "Usuario logeado tiene el ID: " . htmlspecialchars($user_id, ENT_QUOTES, 'UTF-8');
         } else {
-            echo "No user is currently logged in.";
+            echo "Usuario no logeado.";
         }
     ?>
         <!-- Slider -->

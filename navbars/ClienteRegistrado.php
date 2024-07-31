@@ -3,8 +3,8 @@ require_once 'database/connection.php';
 
 $total_products = 0;
 
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
+if (isset($_SESSION['id_usuario'])) {
+    $user_id = $_SESSION['id_usuario'];
     $query = "SELECT SUM(cantidad) as total_products FROM CarritoCompra WHERE id_cliente = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $user_id);
@@ -46,9 +46,11 @@ if (isset($_SESSION['user_id'])) {
             <a href="#" class="profile">
                 <i class="fas fa-user"></i> 
                 <?php 
-                echo '<span class="nombre">'.$_SESSION['nombre_usuario'].' '.$_SESSION['apellido'] . '</span>';
-                echo '<a href="database/logout.php">Salir</a>';
+                if (isset($_SESSION['nombre_usuario']) && isset($_SESSION['apellido'])) {
+                    echo '<span class="nombre">' . $_SESSION['nombre_usuario'] . ' ' . $_SESSION['apellido'] . '</span>';
+                }
                 ?>
+                <a href="database/logout.php">Salir</a>
             </a>
             <div class="espacio-derecho" onclick="location.href='templates/carrito.php'">
                 <a href="#" class="cart">

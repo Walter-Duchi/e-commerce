@@ -6,8 +6,8 @@ $total_products = 0;
 $productos_carrito = [];
 $total_amount = 0.00;
 
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
+if (isset($_SESSION['id_usuario'])) {
+    $user_id = $_SESSION['id_usuario'];
     $query = "SELECT Productos.id, Productos.nombre, Productos.precio, CarritoCompra.cantidad 
               FROM CarritoCompra 
               JOIN Productos ON CarritoCompra.id_producto = Productos.id 
@@ -61,7 +61,7 @@ $stmt->close();
                         </li>
                     <?php endforeach; ?>
                 </ul>
-                <?php if (!isset($_SESSION['user_id'])): ?>
+                <?php if (!isset($_SESSION['id_usuario'])): ?>
                     <a href="../forms/PagoClienteNoRegistrado.php" class="button">Proceder al Pago</a>
                 <?php endif; ?>
             <?php endif; ?>
