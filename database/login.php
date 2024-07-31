@@ -22,9 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt->num_rows > 0) {
             $stmt->fetch();
             if ($contrasena === $hash_contrasena) {
-                $_SESSION['id'] = $id;
+                $_SESSION['id_usuario'] = $id;
                 $_SESSION['correo_electronico'] = $correo;
-                $_SESSION['nombre'] = $nombre;
+                $_SESSION['nombre_usuario'] = $nombre;
                 $_SESSION['apellido'] = $apellido;
                 $_SESSION['tipo_usuario'] = 'cliente';
                 echo "<script>window.location.href = '../index.php';</script>";
@@ -44,9 +44,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->num_rows > 0) {
                 $stmt->fetch();
                 if ($contrasena === $hash_contrasena) {
-                    $_SESSION['id'] = $id;
+                    $_SESSION['id_usuario'] = $id;
                     $_SESSION['correo_personal'] = $correo;
-                    $_SESSION['nombre'] = $nombre;
+                    $_SESSION['nombre_usuario'] = $nombre;
                     $_SESSION['apellido'] = $apellido;
                     $_SESSION['tipo_usuario'] = 'encargado';
                     echo "<script>window.location.href = '../index.php';</script>";

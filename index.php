@@ -46,7 +46,18 @@ session_start();
                 }
             } elseif ($_SESSION['tipo_usuario'] == 'encargado') {
                 include 'navbars/EncargadoInventarios.php';
-                include 'dashboards/EncargadoInventarios.php';
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                    if ($page == 'clientes_por_responder') {
+                        include 'views/clientesPorResponder.php';
+                    } elseif ($page == 'clientes_respondidos') {
+                        include 'views/clientesRespondidos.php';
+                    } else {
+                        include 'dashboards/EncargadoInventarios.php';
+                    }
+                } else {
+                    include 'dashboards/EncargadoInventarios.php';
+                }
             }
             require 'templates/footer.php';
         } else {

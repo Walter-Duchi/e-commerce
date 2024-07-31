@@ -116,7 +116,8 @@ if (isset($_GET['product_id'])) {
             <header>
                 <nav>
                     <!-- Aquí se coloca el menú de navegación -->
-                    <span class="nombre"><?php echo $_SESSION['nombre'] ?? 'Invitado'; ?></span>
+                    <!-- Ejemplo de usuario autenticado -->
+                    <span class="nombre"><?php echo $_SESSION['nombre_usuario']; ?></span>
                 </nav>
             </header>
             <main>
@@ -137,7 +138,8 @@ if (isset($_GET['product_id'])) {
                 <div class="contenedor">
                     <section class="resena">
                         <h2>Chat relacionado con este producto</h2>
-                        <?php if (isset($_SESSION['tipo_usuario']) && in_array($_SESSION['tipo_usuario'], ['cliente', 'encargado'])): ?>
+                        <?php if ($_SESSION['tipo_usuario'] == 'cliente' || $_SESSION['tipo_usuario'] == 'encargado'): ?>
+                            <!-- Aquí se pueden agregar comentarios y reseñas del producto -->
                             <div id="chat">
                                 <?php
                                 $query = $conn->prepare('

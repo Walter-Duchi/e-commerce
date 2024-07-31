@@ -49,9 +49,9 @@
         </nav>
         <nav class="navbar-links">
             <div class="nav-links">
-                <a href="#" style="margin: 0 50px;">Productos</a>
-                <a href="#" class="highlight" style="margin: 0 50px;">Clientes por responder</a>
-                <a href="#" style="margin: 0 50px;">Clientes respondidos</a>
+                <a href="index.php?page=productos" style="margin: 0 50px;">Productos</a>
+                <a href="index.php?page=clientes_por_responder" style="margin: 0 50px;">Clientes por responder</a>
+                <a href="index.php?page=clientes_respondidos" style="margin: 0 50px;">Clientes respondidos</a>
             </div>
         </nav>
 

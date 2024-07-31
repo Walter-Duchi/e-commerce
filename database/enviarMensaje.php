@@ -1,31 +1,30 @@
 <?php
 session_start();
+require_once('connection.php');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['mensaje']) && isset($_POST['product_id'])) {
-    $mensaje = trim($_POST['mensaje']);
-    $product_id = intval($_POST['product_id']);
-    require_once('connection.php');
+if (isset($_POST['id_mensaje']) && isset($_POST['respuesta'])) {
+    $id_mensaje = $_POST['id_mensaje'];
+    $respuesta = $_POST['respuesta'];
+    $id_encargado = $_SESSION['id_usuario']; // Asumiendo que la sesión almacena el ID del encargado
+    $nombre_usuario = $_SESSION['nombre_usuario']; // Asumiendo que la sesión almacena el nombre del usuario
 
-    if (!empty($mensaje) && isset($_SESSION['nombre']) && isset($_SESSION['tipo_usuario'])) {
-        $nombre_usuario = $_SESSION['nombre'];
-        $id_usuario = $_SESSION['id_usuario'] ?? NULL;
-        $id_encargado = $_SESSION['id_encargado'] ?? NULL;
+    $query = $conn->prepare('
+        INSERT INTO MensajesForo (id_producto, id_encargado, id_respuesta_a, nombre_usuario, mensaje) 
+        SELECT id_producto, ?, id, ?, ? 
+        FROM MensajesForo 
+        WHERE id = ?
+    ');
+    $query->bind_param('issi', $id_encargado, $id_mensaje, $nombre_usuario, $respuesta);
+    $query->execute();
 
-        $query = $conn->prepare('
-            INSERT INTO MensajesForo (id_producto, id_usuario, id_encargado, nombre_usuario, mensaje) 
-            VALUES (?, ?, ?, ?, ?)
-        ');
-        $query->bind_param('iiiss', $product_id, $id_usuario, $id_encargado, $nombre_usuario, $mensaje);
-        if ($query->execute()) {
-            header('Location: ../index.php?page=detalleProducto&product_id=' . $product_id);
-            exit();
-        } else {
-            echo "Error al enviar el mensaje.";
-        }
-    } else {
-        echo "Todos los campos son obligatorios.";
-    }
+    // Consulta para actualizar el estado del mensaje original
+    $query = $conn->prepare('UPDATE MensajesForo SET estado = TRUE WHERE id = ?');
+    $query->bind_param('i', $id_mensaje);
+    $query->execute();
+
+    header('Location: ../index.php?page=clientes_por_responder');
+    exit();
 } else {
-    echo "Solicitud no válida.";
+    echo "Datos insuficientes para procesar la solicitud.";
 }
 ?>
