@@ -110,22 +110,24 @@
         </style>
     </head>
     <body>
-        <?php include '../navbars/EncargadoInventarios.html'; ?>
+        <?php include 'navbars/EncargadoInventarios.php'; ?>
         <main style="margin-top: 110px;">
             <div class="contenedor">
-               
+                <h1>Bienvenido Encargado de Inventarios</h1>
+                <p>Aquí puedes gestionar el inventario.</p>
+
                 <section class="productos">
                     <h2>Todos los productos</h2>
                     <div class="listaProductos">
                         <?php
-                        require '../database/connection.php';
+                        require 'database/connection.php';
                         $query = "SELECT * FROM Productos ORDER BY nombre ASC";
                         $result = $conn->query($query);
 
                         while ($row = $result->fetch_assoc()) {
                             echo '<div class="itemProducto">';
                             echo '<div class="verProducto" onclick="redirigir(\'producto.php?id=' . $row['id'] . '\')">';
-                            echo '<img src="../assets/uploads/' . $row['imagen_url'] . '" alt="' . $row['nombre'] . '">';
+                            echo '<img src="assets/uploads/' . $row['imagen_url'] . '" alt="' . $row['nombre'] . '">';
                             echo '<p>' . $row['nombre'] . '</p>';
                             echo '<p>$' . $row['precio'] . '</p>';
                             echo '</div>';

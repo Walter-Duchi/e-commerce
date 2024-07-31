@@ -28,7 +28,7 @@
         <nav class="navbar">
             <i class="fa-solid fa-bars" id="menu-toggle"></i> <!--Ocultar es cuando el ancho de la pantalla sea de 710px o menor-->
             <div class="logo">
-                <img src="../assets/img/logo.png" alt="Logo">
+                <img src="assets/img/logo.png" alt="Logo">
                 <a href="#" class="ocultar">Envios Express</a><!--Ocultar es cuando el ancho de la pantalla sea de 710px o menor-->
             </div>
             <div class="search-bar">
@@ -37,7 +37,11 @@
             </div>
             <div class="nav-links">
                 <a href="#" class="profile">
-                    <i class="fas fa-user"></i> <span class="nombre">Walter Duchi</span><!--Ocultar el texto de Walter Duchi cuando el ancho de la pantalla sea de 710px o menor-->
+                    <i class="fas fa-user"></i> 
+                    <?php 
+                    echo '<span class="nombre">' . $_SESSION['nombre'] . ' ' . $_SESSION['apellido'] . '</span>';
+                    echo '<a href="database/logout.php">Salir</a>';
+                    ?>
                 </a>
             </div>
 

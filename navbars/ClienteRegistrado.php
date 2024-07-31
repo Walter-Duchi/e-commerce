@@ -65,7 +65,11 @@ if (isset($_SESSION['user_id'])) {
                 </div>
             </div>
             <a href="#" class="profile">
-                <i class="fas fa-user"></i> <span class="nombre">Walter Duchi</span><!--Ocultar el texto de Walter Duchi cuando el ancho de la pantalla sea de 710px o menor-->
+                <i class="fas fa-user"></i> 
+                <?php 
+                echo '<span class="nombre">' . $_SESSION['nombre'] . ' ' . $_SESSION['apellido'] . '</span>';
+                echo '<li><a href="database/logout.php">Salir</a></li>';
+                ?><!--Ocultar el texto de Walter Duchi cuando el ancho de la pantalla sea de 710px o menor-->
             </a>
             <div class="espacio-derecho" onclick="location.href='templates/carrito.php'">
                 <a href="#" class="cart">

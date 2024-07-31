@@ -10,7 +10,7 @@ session_start();
     <link rel="stylesheet" href="css/navbar-footer.css">
     <link rel="stylesheet" href="../css/navbar-footer.css">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="css/styles.css">        
+    <link rel="stylesheet" href="css/styles.css">
     <script src="assets/js/scripts.js"></script> <!-- Incluir tu archivo JS -->
     <style>
         button.cuenta {
@@ -24,7 +24,6 @@ session_start();
 
     if (isset($_POST['cuenta'])) {
         include 'redirects/sign-in-up.php';
-
     } elseif (isset($_GET['action'])) {
         $action = $_GET['action'];
         if ($action == 'registro_cliente') {
@@ -35,24 +34,34 @@ session_start();
             include 'forms/login.php';
         }
     } else {
-        include 'navbars/ClienteNoRegistrado.php'; // or ClienteRegistrado.php based on session or login status
-
-        if (isset($_GET['categoria'])) {
-            $categoria = $_GET['categoria'];
-            include('views/productosCategoria.php');
-        }elseif (isset($_GET['page'])) {
-        $page = $_GET['page'];
-        if ($page == 'detalleProducto' && isset($_GET['product_id'])) {
-            include 'templates/DetalleProducto.php';
+        if (isset($_SESSION['tipo_usuario'])) {
+            if ($_SESSION['tipo_usuario'] == 'cliente') {
+                include 'navbars/ClienteRegistrado.php';
+                include 'dashboards/Cliente-Registrado-NoRegistrado.php';
+            } elseif ($_SESSION['tipo_usuario'] == 'encargado') {
+                include 'navbars/EncargadoInventarios.php';
+                include 'dashboards/EncargadoInventarios.php';
+            }
+            require 'templates/footer.php';
         } else {
-            include 'views/404.php';
+            include 'navbars/ClienteNoRegistrado.php';
+            if (isset($_GET['categoria'])) {
+                $categoria = $_GET['categoria'];
+                include('views/productosCategoria.php');
+            } elseif (isset($_GET['page'])) {
+                $page = $_GET['page'];
+                if ($page == 'detalleProducto' && isset($_GET['product_id'])) {
+                    include 'templates/DetalleProducto.php';
+                } else {
+                    include 'views/404.php';
+                }
+            } elseif (isset($_POST['carrito'])) {
+                include 'views/carrito.php';
+            } else {
+                include 'dashboards/Cliente-Registrado-NoRegistrado.php';
+            }
+            require 'templates/footer.php';
         }
-        }elseif (isset($_POST['carrito'])) {
-            include 'views/carrito.php';
-        } else {
-            include 'dashboards/Cliente-Registrado-NoRegistrado.php';
-        }
-        require 'templates/footer.php';
     }
     ?>
 </body>
