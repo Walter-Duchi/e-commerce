@@ -4,10 +4,11 @@ require_once '../database/connection.php';
 
 $total_products = 0;
 $productos_carrito = [];
+$total_amount = 0.00;
 
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    $query = "SELECT Productos.nombre, Productos.precio, CarritoCompra.cantidad 
+    $query = "SELECT Productos.id, Productos.nombre, Productos.precio, CarritoCompra.cantidad 
               FROM CarritoCompra 
               JOIN Productos ON CarritoCompra.id_producto = Productos.id 
               WHERE CarritoCompra.id_cliente = ?";
@@ -15,7 +16,7 @@ if (isset($_SESSION['user_id'])) {
     $stmt->bind_param("i", $user_id);
 } else {
     $user_id = 1; // Cliente no registrado
-    $query = "SELECT Productos.nombre, Productos.precio, CarritoCompra.cantidad 
+    $query = "SELECT Productos.id, Productos.nombre, Productos.precio, CarritoCompra.cantidad 
               FROM CarritoCompra 
               JOIN Productos ON CarritoCompra.id_producto = Productos.id 
               WHERE CarritoCompra.id_cliente_no_registrado = ?";
@@ -29,6 +30,7 @@ $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
     $productos_carrito[] = $row;
     $total_products += $row['cantidad'];
+    $total_amount += $row['precio'] * $row['cantidad'];
 }
 
 $stmt->close();
@@ -46,6 +48,7 @@ $stmt->close();
     <main>
         <h1>Carrito de Compras</h1>
         <p>Total de productos: <?php echo $total_products; ?></p>
+        <p>Total a pagar: $<?php echo number_format($total_amount, 2); ?></p>
         <div class="carrito">
             <?php if (empty($productos_carrito)): ?>
                 <p>Tu carrito está vacío.</p>
@@ -54,11 +57,14 @@ $stmt->close();
                     <?php foreach ($productos_carrito as $producto): ?>
                         <li>
                             <?php echo $producto['nombre']; ?> - $<?php echo $producto['precio']; ?> x <?php echo $producto['cantidad']; ?>
-                            <button class="remove-item" data-name="<?php echo $producto['nombre']; ?>">Eliminar</button>
+                            <button class="remove-item" data-id="<?php echo $producto['id']; ?>">Eliminar</button>
                         </li>
                     <?php endforeach; ?>
                 </ul>
-               
+                <button id="clear-cart">Vaciar Carrito</button>
+                <?php if (!isset($_SESSION['user_id'])): ?>
+                    <a href="../forms/PagoClienteNoRegistrado.php" class="button">Proceder al Pago</a>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
         <a href="../index.php">Volver a la tienda</a>
@@ -68,8 +74,8 @@ $stmt->close();
     <script>
     $(document).ready(function() {
         $('.remove-item').click(function() {
-            var productName = $(this).data('name');
-            $.post('../database/remove_from_cart.php', { product_name: productName }, function(response) {
+            var productId = $(this).data('id');
+            $.post('../database/remove_from_cart.php', { product_id: productId }, function(response) {
                 var data = JSON.parse(response);
                 if (data.status === 'success') {
                     location.reload();
