@@ -6,8 +6,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $product_id = intval($_POST['product_id']);
     $cantidad = 1; // Se agrega una unidad por defecto
 
-    if (isset($_SESSION['user_id'])) {
-        $user_id = $_SESSION['user_id'];
+    if (isset($_SESSION['id_usuario'])) {
+        $user_id = $_SESSION['id_usuario'];
         // Verificar si el producto ya está en el carrito del usuario
         $sql = "SELECT id, cantidad FROM CarritoCompra WHERE id_cliente = ? AND id_producto = ?";
         $stmt = $conn->prepare($sql);
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $insert_sql = "INSERT INTO CarritoCompra (id_cliente, id_cliente_no_registrado, id_producto, cantidad) VALUES (?, ?, ?, ?)";
         $insert_stmt = $conn->prepare($insert_sql);
         $null = NULL; // Variable para pasar como parámetro NULL
-        if (isset($_SESSION['user_id'])) {
+        if (isset($_SESSION['id_usuario'])) {
             $insert_stmt->bind_param("iiii", $user_id, $null, $product_id, $cantidad);
         } else {
             $insert_stmt->bind_param("iiii", $null, $user_id, $product_id, $cantidad);

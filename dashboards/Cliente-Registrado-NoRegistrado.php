@@ -160,7 +160,7 @@ $productos_vendidos = obtenerProductosPorCategoria(17, $conn);
         button:hover {
             background-color: #98c1d9;
         }
-    </style>
+    </style> 
     <script>
         function redirigirProducto(productId) {
             window.location.href = `index.php?page=detalleProducto&product_id=${productId}`;
@@ -181,6 +181,14 @@ $productos_vendidos = obtenerProductosPorCategoria(17, $conn);
 </head>
 <body>
     <main>
+    <?php
+        if (isset($_SESSION['id_usuario'])) {
+            $user_id = $_SESSION['id_usuario'];
+            echo "User ID: " . htmlspecialchars($user_id, ENT_QUOTES, 'UTF-8');
+        } else {
+            echo "No user is currently logged in.";
+        }
+    ?>
         <!-- Slider -->
         <div class="slider">
             <div class="slides">
