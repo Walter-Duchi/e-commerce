@@ -8,15 +8,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="css/navbar-footer.css">
-    <link rel="stylesheet" href="../css/navbar-footer.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="assets/js/scripts.js"></script> <!-- Incluir tu archivo JS -->
-    <style>
-        button.cuenta {
-            border-radius: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <?php
@@ -37,7 +29,7 @@ session_start();
         if (isset($_SESSION['tipo_usuario'])) {
             if ($_SESSION['tipo_usuario'] == 'cliente') {
                 include 'navbars/ClienteRegistrado.php';
-                if (isset($_GET['categoria'])){
+                if (isset($_GET['categoria'])) {
                     $categoria = $_GET['categoria'];
                     include('views/productosCategoria.php');
                 } elseif (isset($_GET['page'])) {
@@ -52,7 +44,6 @@ session_start();
                 } else {
                     include 'dashboards/Cliente-Registrado-NoRegistrado.php';
                 }
-                
             } elseif ($_SESSION['tipo_usuario'] == 'encargado') {
                 include 'navbars/EncargadoInventarios.php';
                 include 'dashboards/EncargadoInventarios.php';
