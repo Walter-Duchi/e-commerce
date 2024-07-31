@@ -37,8 +37,21 @@ session_start();
         if (isset($_SESSION['tipo_usuario'])) {
             if ($_SESSION['tipo_usuario'] == 'cliente') {
                 include 'navbars/ClienteRegistrado.php';
-                include 'dashboards/Cliente-Registrado-NoRegistrado.php';
-            } elseif ($_SESSION['tipo_usuario'] == 'encargado') {
+                if (isset($_GET['categoria'])){
+                    $categoria = $_GET['categoria'];
+                    include('views/productosCategoria.php');
+                }elseif (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                    if ($page == 'detalleProducto' && isset($_GET['product_id'])) {
+                        include 'templates/DetalleProducto.php';
+                    } else {
+                        include 'views/404.php';
+                    }
+                }else{
+                    include 'dashboards/Cliente-Registrado-NoRegistrado.php';
+                }
+                
+            }elseif ($_SESSION['tipo_usuario'] == 'encargado') {
                 include 'navbars/EncargadoInventarios.php';
                 include 'dashboards/EncargadoInventarios.php';
             }
