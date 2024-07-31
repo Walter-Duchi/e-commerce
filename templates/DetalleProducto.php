@@ -131,7 +131,7 @@ if (isset($_GET['product_id'])) {
                 </div>
                 <div class="contenedor">
                     <section class="resena">
-                        <h2>Foro del producto</h2>
+                        <h2>Chat relacionado con este producto</h2>
                         <!-- Aquí se pueden agregar comentarios y reseñas del producto -->
                     </section>
                 </div> 
