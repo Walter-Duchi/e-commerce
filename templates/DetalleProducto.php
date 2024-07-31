@@ -24,7 +24,7 @@ if (isset($_GET['product_id'])) {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title><?php echo $product['nombre']; ?></title>
+            <title><?php echo htmlspecialchars($product['nombre']); ?></title>
             <style>
                 .infoProducto {
                     display: flex;
@@ -117,28 +117,28 @@ if (isset($_GET['product_id'])) {
                 <nav>
                     <!-- Aquí se coloca el menú de navegación -->
                     <!-- Ejemplo de usuario autenticado -->
-                    <span class="nombre"><?php echo $_SESSION['nombre_usuario']; ?></span>
+                    <span class="nombre"><?php echo isset($_SESSION['nombre_usuario']) ? htmlspecialchars($_SESSION['nombre_usuario']) : ''; ?></span>
                 </nav>
             </header>
             <main>
                 <div class="infoProducto">
-                    <img src="assets/uploads/<?php echo $product['imagen_url']; ?>" alt="<?php echo $product['nombre']; ?>">
+                    <img src="assets/uploads/<?php echo htmlspecialchars($product['imagen_url']); ?>" alt="<?php echo htmlspecialchars($product['nombre']); ?>">
                     <div class="detallesProducto">
-                        <h1><?php echo $product['nombre']; ?></h1>
-                        <p><?php echo $product['descripcion']; ?></p>
-                        <p>Precio: $<?php echo $product['precio']; ?></p>
-                        <p>Categoría: <?php echo $product['categoria']; ?></p>
+                        <h1><?php echo htmlspecialchars($product['nombre']); ?></h1>
+                        <p><?php echo htmlspecialchars($product['descripcion']); ?></p>
+                        <p>Precio: $<?php echo htmlspecialchars($product['precio']); ?></p>
+                        <p>Categoría: <?php echo htmlspecialchars($product['categoria']); ?></p>
                     </div>
                     <div class="infoCompra">
                         <p class="disponibilidad"><?php echo $product['stock'] > 0 ? 'Disponible' : 'Agotado'; ?></p>
-                        <p>$<?php echo $product['precio']; ?></p>
-                        <button onclick="agregarAlCarrito(<?php echo $product['id']; ?>)">Agregar al carrito</button>
+                        <p>$<?php echo htmlspecialchars($product['precio']); ?></p>
+                        <button onclick="agregarAlCarrito(<?php echo htmlspecialchars($product['id']); ?>)">Agregar al carrito</button>
                     </div>
                 </div>
                 <div class="contenedor">
                     <section class="resena">
                         <h2>Chat relacionado con este producto</h2>
-                        <?php if ($_SESSION['tipo_usuario'] == 'cliente' || $_SESSION['tipo_usuario'] == 'encargado'): ?>
+                        <?php if (isset($_SESSION['tipo_usuario']) && ($_SESSION['tipo_usuario'] == 'cliente' || $_SESSION['tipo_usuario'] == 'encargado')): ?>
                             <!-- Aquí se pueden agregar comentarios y reseñas del producto -->
                             <div id="chat">
                                 <?php
@@ -154,14 +154,14 @@ if (isset($_GET['product_id'])) {
 
                                 while ($message = $result->fetch_assoc()) {
                                     echo "<div class='mensaje'>";
-                                    echo "<p><strong>" . $message['nombre_usuario'] . ":</strong> " . $message['mensaje'] . "</p>";
-                                    echo "<p><small>" . $message['fecha'] . "</small></p>";
+                                    echo "<p><strong>" . htmlspecialchars($message['nombre_usuario']) . ":</strong> " . htmlspecialchars($message['mensaje']) . "</p>";
+                                    echo "<p><small>" . htmlspecialchars($message['fecha']) . "</small></p>";
                                     echo "</div>";
                                 }
                                 ?>
                             </div>
                             <form action="database/enviarMensaje.php" method="post">
-                                <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+                                <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['id']); ?>">
                                 <textarea name="mensaje" required></textarea>
                                 <button type="submit">Enviar</button>
                             </form>
