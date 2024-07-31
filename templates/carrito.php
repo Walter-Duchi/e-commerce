@@ -54,12 +54,42 @@ $stmt->close();
                     <?php foreach ($productos_carrito as $producto): ?>
                         <li>
                             <?php echo $producto['nombre']; ?> - $<?php echo $producto['precio']; ?> x <?php echo $producto['cantidad']; ?>
+                            <button class="remove-item" data-name="<?php echo $producto['nombre']; ?>">Eliminar</button>
                         </li>
                     <?php endforeach; ?>
                 </ul>
+               
             <?php endif; ?>
         </div>
         <a href="../index.php">Volver a la tienda</a>
     </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.remove-item').click(function() {
+            var productName = $(this).data('name');
+            $.post('../database/remove_from_cart.php', { product_name: productName }, function(response) {
+                var data = JSON.parse(response);
+                if (data.status === 'success') {
+                    location.reload();
+                } else {
+                    alert('No se pudo eliminar el producto del carrito.');
+                }
+            });
+        });
+
+        $('#clear-cart').click(function() {
+            $.post('../database/clear_cart.php', function(response) {
+                var data = JSON.parse(response);
+                if (data.status === 'success') {
+                    location.reload();
+                } else {
+                    alert('No se pudo vaciar el carrito.');
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>
