@@ -1,3 +1,4 @@
+
 -- Crear base de datos ecommerce
 CREATE DATABASE IF NOT EXISTS ecommerce;
 USE ecommerce;
@@ -164,6 +165,7 @@ CREATE TABLE IF NOT EXISTS MensajesForo (
     id_usuario INT DEFAULT NULL,
     id_encargado INT DEFAULT NULL,
     id_respuesta_a INT DEFAULT NULL,
+    nombre_usuario VARCHAR(100) NOT NULL,
     mensaje TEXT NOT NULL,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     estado BOOLEAN DEFAULT FALSE,
@@ -258,6 +260,8 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
+
+
 
 -- Procedimiento para actualizar el estado del mensaje
 DELIMITER //
