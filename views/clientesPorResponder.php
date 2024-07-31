@@ -11,7 +11,8 @@ $query->execute();
 $result = $query->get_result();
 ?>
 <div class="container">
-    <h2>Clientes por Responder</h2>
+    <<main>
+         <h2>Clientes por Responder</h2>
     <table>
         <thead>
             <tr>
@@ -38,4 +39,6 @@ $result = $query->get_result();
             <?php endwhile; ?>
         </tbody>
     </table>
+    </main>
+   
 </div>

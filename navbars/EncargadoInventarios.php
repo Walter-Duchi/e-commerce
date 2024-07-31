@@ -27,10 +27,13 @@
     <body>
         <nav class="navbar">
             <i class="fa-solid fa-bars" id="menu-toggle"></i> <!--Ocultar es cuando el ancho de la pantalla sea de 710px o menor-->
-            <div class="logo">
+            <a href="index.php?page=productos">
+                <div class="logo">
                 <img src="assets/img/logo.png" alt="Logo">
-                <a href="#" class="ocultar">Envios Express</a><!--Ocultar es cuando el ancho de la pantalla sea de 710px o menor-->
+                <a href="" class="ocultar">Envios Express</a><!--Ocultar es cuando el ancho de la pantalla sea de 710px o menor-->
             </div>
+            </a>
+            
             <div class="search-bar">
                 <input type="text" placeholder="Busca más de 10000 productos">
                 <button><i class="fas fa-search"></i></button>

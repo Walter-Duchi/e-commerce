@@ -1,42 +1,47 @@
 <?php
+session_start();
 require_once('database/connection.php');
 
-$query = $conn->prepare('
-    SELECT mf.id, mf.nombre_usuario, mf.mensaje, mf.fecha, r.respuesta, r.fecha_respuesta 
-    FROM MensajesForo mf 
-    JOIN (
-        SELECT id_respuesta_a AS id, mensaje AS respuesta, fecha AS fecha_respuesta 
-        FROM MensajesForo 
-        WHERE id_encargado IS NOT NULL
-    ) r ON mf.id = r.id
-    WHERE mf.estado = TRUE
-    ORDER BY r.fecha_respuesta DESC
-');
+// Asegúrate de que el usuario está logueado y es un encargado
+if (!isset($_SESSION['id']) || $_SESSION['tipo_usuario'] != 'encargado') {
+    header('Location: ../index.php');
+    exit();
+}
+
+// Obtener los mensajes respondidos
+$query = $conn->prepare('SELECT * FROM MensajesForo WHERE estado = TRUE');
 $query->execute();
 $result = $query->get_result();
 ?>
-<div class="container">
-    <h2>Clientes Respondidos</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre Usuario</th>
-                <th>Fecha</th>
-                <th>Mensaje</th>
-                <th>Respuesta</th>
-                <th>Fecha Respuesta</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($row = $result->fetch_assoc()): ?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes Respondidos</title>
+    <link rel="stylesheet" href="../css/styles.css"> <!-- Asegúrate de tener un archivo CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Clientes Respondidos</h2>
+        <table>
+            <thead>
                 <tr>
-                    <td><?php echo $row['nombre_usuario']; ?></td>
-                    <td><?php echo $row['fecha']; ?></td>
-                    <td><?php echo $row['mensaje']; ?></td>
-                    <td><?php echo $row['respuesta']; ?></td>
-                    <td><?php echo $row['fecha_respuesta']; ?></td>
+                    <th>Nombre</th>
+                    <th>Mensaje</th>
+                    <th>Fecha</th>
                 </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($row['nombre_usuario']); ?></td>
+                        <td><?php echo htmlspecialchars($row['mensaje']); ?></td>
+                        <td><?php echo htmlspecialchars($row['fecha']); ?></td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
