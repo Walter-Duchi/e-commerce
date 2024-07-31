@@ -43,6 +43,7 @@
                     echo '<a href="database/logout.php">Salir</a>';
                     ?>
                 </a>
+                <div class="espacio-derecho" onclick="location.href='templates/carrito.php'"></div>
             </div>
 
         </nav>

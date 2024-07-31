@@ -211,7 +211,6 @@
 
             </div>
         </main>
-        <?php include '../templates/footer.html'; ?>
         <script>
             function redirigir(url) {
                 window.location.href = url;
