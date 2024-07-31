@@ -40,18 +40,20 @@ session_start();
                 if (isset($_GET['categoria'])){
                     $categoria = $_GET['categoria'];
                     include('views/productosCategoria.php');
-                }elseif (isset($_GET['page'])) {
+                } elseif (isset($_GET['page'])) {
                     $page = $_GET['page'];
                     if ($page == 'detalleProducto' && isset($_GET['product_id'])) {
                         include 'templates/DetalleProducto.php';
                     } else {
                         include 'views/404.php';
                     }
-                }else{
+                } elseif (isset($_POST['carrito'])) {
+                    include 'templates/carrito.php';
+                } else {
                     include 'dashboards/Cliente-Registrado-NoRegistrado.php';
                 }
                 
-            }elseif ($_SESSION['tipo_usuario'] == 'encargado') {
+            } elseif ($_SESSION['tipo_usuario'] == 'encargado') {
                 include 'navbars/EncargadoInventarios.php';
                 include 'dashboards/EncargadoInventarios.php';
             }
@@ -69,7 +71,7 @@ session_start();
                     include 'views/404.php';
                 }
             } elseif (isset($_POST['carrito'])) {
-                include 'views/carrito.php';
+                include 'templates/carrito.php';
             } else {
                 include 'dashboards/Cliente-Registrado-NoRegistrado.php';
             }

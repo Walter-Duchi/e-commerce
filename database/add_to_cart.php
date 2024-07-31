@@ -1,37 +1,52 @@
 <?php
 session_start();
-require_once '../database/connection.php';
+require_once 'connection.php';
 
-$response = array('success' => false, 'message' => '');
-
-if (isset($_POST['product_id'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $product_id = intval($_POST['product_id']);
-    $cantidad = isset($_POST['cantidad']) ? intval($_POST['cantidad']) : 1;
+    $cantidad = 1; // Se agrega una unidad por defecto
 
     if (isset($_SESSION['user_id'])) {
         $user_id = $_SESSION['user_id'];
-        $query = "INSERT INTO CarritoCompra (id_cliente, id_producto, cantidad) VALUES (?, ?, ?)
-                  ON DUPLICATE KEY UPDATE cantidad = cantidad + VALUES(cantidad)";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("iii", $user_id, $product_id, $cantidad);
+        // Verificar si el producto ya está en el carrito del usuario
+        $sql = "SELECT id, cantidad FROM CarritoCompra WHERE id_cliente = ? AND id_producto = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $user_id, $product_id);
     } else {
-        $query = "INSERT INTO CarritoCompra (id_cliente_no_registrado, id_producto, cantidad) VALUES (1, ?, ?)
-                  ON DUPLICATE KEY UPDATE cantidad = cantidad + VALUES(cantidad)";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("ii", $product_id, $cantidad);
+        $user_id = 1; // Cliente no registrado
+        // Verificar si el producto ya está en el carrito del cliente no registrado
+        $sql = "SELECT id, cantidad FROM CarritoCompra WHERE id_cliente_no_registrado = ? AND id_producto = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $user_id, $product_id);
     }
 
-    if ($stmt->execute()) {
-        $response['success'] = true;
-        $response['message'] = 'Producto agregado al carrito.';
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Si el producto ya está en el carrito, actualizar la cantidad
+        $row = $result->fetch_assoc();
+        $new_quantity = $row['cantidad'] + 1;
+        $update_sql = "UPDATE CarritoCompra SET cantidad = ? WHERE id = ?";
+        $update_stmt = $conn->prepare($update_sql);
+        $update_stmt->bind_param("ii", $new_quantity, $row['id']);
+        $update_stmt->execute();
+        $update_stmt->close();
     } else {
-        $response['message'] = 'Error al agregar el producto al carrito.';
+        // Si el producto no está en el carrito, insertarlo
+        $insert_sql = "INSERT INTO CarritoCompra (id_cliente, id_cliente_no_registrado, id_producto, cantidad) VALUES (?, ?, ?, ?)";
+        $insert_stmt = $conn->prepare($insert_sql);
+        if (isset($_SESSION['user_id'])) {
+            $insert_stmt->bind_param("iiii", $user_id, NULL, $product_id, $cantidad);
+        } else {
+            $insert_stmt->bind_param("iiii", NULL, $user_id, $product_id, $cantidad);
+        }
+        $insert_stmt->execute();
+        $insert_stmt->close();
     }
 
     $stmt->close();
-} else {
-    $response['message'] = 'ID del producto no especificado.';
+    header("Location: ../index.php");
+    exit();
 }
-
-echo json_encode($response);
 ?>

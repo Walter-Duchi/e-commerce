@@ -2,23 +2,35 @@
 session_start();
 require_once '../database/connection.php';
 
-$products_in_cart = [];
+$total_products = 0;
+$productos_carrito = [];
 
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    $query = "SELECT p.nombre, p.precio, c.cantidad, c.total FROM CarritoCompra c INNER JOIN Productos p ON c.id_producto = p.id WHERE c.id_cliente = ?";
+    $query = "SELECT Productos.nombre, Productos.precio, CarritoCompra.cantidad 
+              FROM CarritoCompra 
+              JOIN Productos ON CarritoCompra.id_producto = Productos.id 
+              WHERE CarritoCompra.id_cliente = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $user_id);
 } else {
-    $query = "SELECT p.nombre, p.precio, c.cantidad, c.total FROM CarritoCompra c INNER JOIN Productos p ON c.id_producto = p.id WHERE c.id_cliente_no_registrado = 1";
+    $user_id = 1; // Cliente no registrado
+    $query = "SELECT Productos.nombre, Productos.precio, CarritoCompra.cantidad 
+              FROM CarritoCompra 
+              JOIN Productos ON CarritoCompra.id_producto = Productos.id 
+              WHERE CarritoCompra.id_cliente_no_registrado = ?";
     $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $user_id);
 }
 
 $stmt->execute();
 $result = $stmt->get_result();
+
 while ($row = $result->fetch_assoc()) {
-    $products_in_cart[] = $row;
+    $productos_carrito[] = $row;
+    $total_products += $row['cantidad'];
 }
+
 $stmt->close();
 ?>
 
@@ -27,29 +39,27 @@ $stmt->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de Compra</title>
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="../css/navbar-footer.css">
 </head>
 <body>
-    <h1>Carrito de Compra</h1>
-    <?php if (empty($products_in_cart)) : ?>
-        <p>No hay productos en el carrito.</p>
-    <?php else : ?>
-        <table>
-            <tr>
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-                <th>Total</th>
-            </tr>
-            <?php foreach ($products_in_cart as $product) : ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($product['nombre']); ?></td>
-                    <td><?php echo htmlspecialchars($product['precio']); ?></td>
-                    <td><?php echo htmlspecialchars($product['cantidad']); ?></td>
-                    <td><?php echo htmlspecialchars($product['total']); ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-    <?php endif; ?>
+    <main>
+        <h1>Carrito de Compras</h1>
+        <p>Total de productos: <?php echo $total_products; ?></p>
+        <div class="carrito">
+            <?php if (empty($productos_carrito)): ?>
+                <p>Tu carrito está vacío.</p>
+            <?php else: ?>
+                <ul>
+                    <?php foreach ($productos_carrito as $producto): ?>
+                        <li>
+                            <?php echo $producto['nombre']; ?> - $<?php echo $producto['precio']; ?> x <?php echo $producto['cantidad']; ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </div>
+        <a href="../index.php">Volver a la tienda</a>
+    </main>
 </body>
 </html>
