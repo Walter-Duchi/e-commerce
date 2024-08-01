@@ -83,6 +83,7 @@ if (isset($_GET['product_id'])) {
 
                 .replica {
                     border-color: #ccc;
+                    margin-left: 20px;
                 }
 
                 hr {
@@ -139,13 +140,21 @@ if (isset($_GET['product_id'])) {
                     <section class="resena">
                         <h2>Chat relacionado con este producto</h2>
                         <?php if (isset($_SESSION['tipo_usuario']) && ($_SESSION['tipo_usuario'] == 'cliente' || $_SESSION['tipo_usuario'] == 'encargado')): ?>
-                            <!-- Aquí se pueden agregar comentarios y reseñas del producto -->
+                           <form id="mensajeForm" method="post">
+                                <input type="hidden" name="id_cliente" value="<?php echo htmlspecialchars($_SESSION['id_usuario']); ?>">
+                                <input type="hidden" name="id_producto" value="<?php echo htmlspecialchars($product['id']); ?>">
+                                <textarea name="mensaje" required></textarea>
+                                <button type="submit">Enviar</button>
+                            </form>
+                        <!-- Aquí se pueden agregar comentarios y reseñas del producto -->
                             <div id="chat">
                                 <?php
                                 $query = $conn->prepare('
-                                    SELECT mf.id, cr.nombre AS nombre_usuario, mf.mensaje, mf.fecha_mensaje AS fecha 
+                                    SELECT mf.id, cr.nombre AS nombre_usuario, mf.mensaje, mf.fecha_mensaje AS fecha, 
+                                           ei.nombre AS nombre_encargado, mf.respuesta, mf.fecha_respuesta 
                                     FROM mensajes_por_producto mf 
                                     JOIN ClienteRegistrado cr ON mf.id_cliente = cr.id 
+                                    LEFT JOIN EncargadoInventarios ei ON mf.id_encargado = ei.id 
                                     WHERE mf.id_producto = ? 
                                     ORDER BY mf.fecha_mensaje DESC
                                 ');
@@ -154,19 +163,22 @@ if (isset($_GET['product_id'])) {
                                 $result = $query->get_result();
 
                                 while ($message = $result->fetch_assoc()) {
+                                    echo "<div class='replica'>";
                                     echo "<div class='mensaje'>";
                                     echo "<p><strong>" . htmlspecialchars($message['nombre_usuario']) . ":</strong> " . htmlspecialchars($message['mensaje']) . "</p>";
                                     echo "<p><small>" . htmlspecialchars($message['fecha']) . "</small></p>";
+                                    if ($message['respuesta']) {
+                                        echo "<div class='replica'>";
+                                        echo "<p><strong>Encargado de Inventarios:</strong> " . htmlspecialchars($message['respuesta']) . "</p>";
+                                        echo "<p><small>" . htmlspecialchars($message['fecha_respuesta']) . "</small></p>";
+                                        echo "</div>";
+                                    }
+                                    echo "</div>";
                                     echo "</div>";
                                 }
                                 ?>
                             </div>
-                            <form id="mensajeForm" method="post">
-                                <input type="hidden" name="id_cliente" value="<?php echo htmlspecialchars($_SESSION['id_usuario']); ?>">
-                                <input type="hidden" name="id_producto" value="<?php echo htmlspecialchars($product['id']); ?>">
-                                <textarea name="mensaje" required></textarea>
-                                <button type="submit">Enviar</button>
-                            </form>
+                            
                         <?php else: ?>
                             <p>Solo los usuarios registrados y los encargados de inventarios pueden participar en el chat.</p>
                         <?php endif; ?>
@@ -189,6 +201,10 @@ if (isset($_GET['product_id'])) {
                         });
                     });
                 });
+
+                function agregarAlCarrito(productId) {
+                    // Implementar la lógica para agregar al carrito
+                }
             </script>
         </body>
         </html>
