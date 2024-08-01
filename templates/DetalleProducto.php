@@ -143,10 +143,11 @@ if (isset($_GET['product_id'])) {
                             <div id="chat">
                                 <?php
                                 $query = $conn->prepare('
-                                    SELECT mf.id, mf.nombre_usuario, mf.mensaje, mf.fecha 
-                                    FROM MensajesForo mf 
+                                    SELECT mf.id, cr.nombre AS nombre_usuario, mf.mensaje, mf.fecha_mensaje AS fecha 
+                                    FROM mensajes_por_producto mf 
+                                    JOIN ClienteRegistrado cr ON mf.id_cliente = cr.id 
                                     WHERE mf.id_producto = ? 
-                                    ORDER BY mf.fecha DESC
+                                    ORDER BY mf.fecha_mensaje DESC
                                 ');
                                 $query->bind_param('i', $product_id);
                                 $query->execute();
@@ -160,8 +161,9 @@ if (isset($_GET['product_id'])) {
                                 }
                                 ?>
                             </div>
-                            <form action="database/enviarMensaje.php" method="post">
-                                <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['id']); ?>">
+                            <form id="mensajeForm" method="post">
+                                <input type="hidden" name="id_cliente" value="<?php echo htmlspecialchars($_SESSION['id_usuario']); ?>">
+                                <input type="hidden" name="id_producto" value="<?php echo htmlspecialchars($product['id']); ?>">
                                 <textarea name="mensaje" required></textarea>
                                 <button type="submit">Enviar</button>
                             </form>
@@ -172,6 +174,22 @@ if (isset($_GET['product_id'])) {
                 </div> 
             </main>
             <script src="../assets/js/carrito.js"></script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $('#mensajeForm').submit(function(event) {
+                        event.preventDefault();
+                        $.ajax({
+                            type: 'POST',
+                            url: 'database/EnviarMensajeClienteRegistrado.php',
+                            data: $(this).serialize(),
+                            success: function(response) {
+                                location.reload(); // Recargar la página para actualizar el chat
+                            }
+                        });
+                    });
+                });
+            </script>
         </body>
         </html>
         <?php

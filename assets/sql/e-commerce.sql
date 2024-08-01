@@ -1,4 +1,3 @@
-
 -- Crear base de datos ecommerce
 CREATE DATABASE IF NOT EXISTS ecommerce;
 USE ecommerce;
@@ -158,161 +157,21 @@ CREATE TABLE IF NOT EXISTS Compras (
     INDEX idx_compras_id_producto (id_producto)
 );
 
--- Crear tabla de Mensajes en el Foro
-CREATE TABLE IF NOT EXISTS MensajesForo (
+-- Crear tabla de Mensajes por Producto
+CREATE TABLE IF NOT EXISTS mensajes_por_producto (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    id_producto INT,
-    id_usuario INT DEFAULT NULL,
+    id_producto INT NOT NULL,
+    id_cliente INT NOT NULL,
     id_encargado INT DEFAULT NULL,
-    id_respuesta_a INT DEFAULT NULL,
-    nombre_usuario VARCHAR(100) NOT NULL,
     mensaje TEXT NOT NULL,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    estado BOOLEAN DEFAULT FALSE,
+    respuesta TEXT DEFAULT NULL,
+    estado ENUM('no_respondido', 'respondido') DEFAULT 'no_respondido',
+    fecha_mensaje TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_respuesta TIMESTAMP NULL,
     FOREIGN KEY (id_producto) REFERENCES Productos(id),
-    FOREIGN KEY (id_usuario) REFERENCES ClienteRegistrado(id) ON DELETE CASCADE,
-    FOREIGN KEY (id_encargado) REFERENCES EncargadoInventarios(id) ON DELETE CASCADE,
-    FOREIGN KEY (id_respuesta_a) REFERENCES MensajesForo(id) ON DELETE CASCADE,
-    INDEX idx_mensajesforo_id_producto (id_producto),
-    INDEX idx_mensajesforo_id_usuario (id_usuario),
-    INDEX idx_mensajesforo_id_encargado (id_encargado),
-    INDEX idx_mensajesforo_id_respuesta_a (id_respuesta_a)
+    FOREIGN KEY (id_cliente) REFERENCES ClienteRegistrado(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_encargado) REFERENCES EncargadoInventarios(id) ON DELETE CASCADE
 );
-
--- Procedimiento almacenado para calcular la fecha de entrega
-DELIMITER //
-CREATE PROCEDURE IF NOT EXISTS calcularFechaEntrega(IN new_id_compra INT)
-BEGIN
-    DECLARE fecha_compra DATETIME;
-    DECLARE hora_entrega TIME;
-    DECLARE fecha_entrega DATETIME;
-
-    -- Obtener la fecha de compra
-    SELECT fecha_compra INTO fecha_compra FROM Compras WHERE id = new_id_compra;
-
-    -- Calcular la fecha y hora de entrega
-    SET hora_entrega = CASE
-        WHEN HOUR(fecha_compra) >= 17 THEN '08:00:00'
-        WHEN HOUR(fecha_compra) < 8 THEN '08:00:00'
-        ELSE TIME_FORMAT(SEC_TO_TIME(RAND() * 25200), '%H:%i:%s')
-    END;
-
-    SET fecha_entrega = DATE_ADD(DATE(fecha_compra), INTERVAL 1 DAY);
-
-    -- Insertar la fecha de entrega calculada en la tabla de Compras
-    UPDATE Compras SET fecha_entrega = DATE_ADD(fecha_entrega, INTERVAL TIME_TO_SEC(hora_entrega) SECOND) WHERE id = new_id_compra;
-END //
-DELIMITER ;
-
--- Procedimiento almacenado para realizar la compra y deducir saldo
-DELIMITER //
-
-CREATE PROCEDURE IF NOT EXISTS realizarCompra(
-    IN cliente_id INT,
-    IN cliente_no_registrado_id INT,
-    IN producto_id INT,
-    IN cantidad INT,
-    INOUT saldo_suficiente BOOLEAN
-)
-BEGIN
-    DECLARE saldo_actual DECIMAL(10, 2);
-    DECLARE precio_producto DECIMAL(10, 2);
-    DECLARE total_compra DECIMAL(10, 2);
-    DECLARE new_id_compra INT;
-
-    -- Obtener el saldo actual del cliente
-    IF cliente_id IS NOT NULL THEN
-        SELECT saldo INTO saldo_actual
-        FROM DatosBancarios
-        WHERE id_cliente = cliente_id
-        LIMIT 1;  -- Asegurar que solo se devuelve una fila
-    ELSE
-        SELECT saldo INTO saldo_actual
-        FROM DatosBancarios
-        WHERE id_cliente_no_registrado = cliente_no_registrado_id
-        LIMIT 1;  -- Asegurar que solo se devuelve una fila
-    END IF;
-
-    -- Obtener el precio del producto
-    SELECT precio INTO precio_producto
-    FROM Productos
-    WHERE id = producto_id
-    LIMIT 1;  -- Asegurar que solo se devuelve una fila
-
-    -- Calcular el total de la compra
-    SET total_compra = cantidad * precio_producto;
-
-    -- Verificar si hay suficiente saldo
-    IF saldo_actual >= total_compra THEN
-        -- Realizar la compra y actualizar el saldo
-        INSERT INTO Compras (id_cliente, id_cliente_no_registrado, id_producto, cantidad, total)
-        VALUES (cliente_id, cliente_no_registrado_id, producto_id, cantidad, total_compra);
-
-        -- Obtener el ID de la compra insertada
-        SET new_id_compra = LAST_INSERT_ID();
-
-        -- Calcular la fecha de entrega
-        CALL calcularFechaEntrega(new_id_compra);
-
-        -- Actualizar el saldo en la tabla correspondiente
-        IF cliente_id IS NOT NULL THEN
-            UPDATE DatosBancarios
-            SET saldo = saldo - total_compra
-            WHERE id_cliente = cliente_id;
-        ELSE
-            UPDATE DatosBancarios
-            SET saldo = saldo - total_compra
-            WHERE id_cliente_no_registrado = cliente_no_registrado_id;
-        END IF;
-
-        SET saldo_suficiente = TRUE;
-    ELSE
-        SET saldo_suficiente = FALSE;
-    END IF;
-END //
-
-DELIMITER ;
-
-
-
--- Procedimiento para actualizar el estado del mensaje
-DELIMITER //
-CREATE PROCEDURE IF NOT EXISTS actualizarEstadoMensaje(
-    IN id_mensaje INT,
-    IN id_encargado INT
-)
-BEGIN
-    DECLARE es_cliente INT;
-    
-    -- Verificar si el mensaje es de un cliente registrado
-    SELECT id_usuario INTO es_cliente FROM MensajesForo WHERE id = id_mensaje AND id_usuario IS NOT NULL;
-
-    IF es_cliente IS NOT NULL THEN
-        -- Actualizar el estado del mensaje a respondido
-        UPDATE MensajesForo SET estado = TRUE WHERE id = id_mensaje;
-    END IF;
-END //
-DELIMITER ;
-
--- Trigger para responder mensajes del foro
-DELIMITER //
-CREATE TRIGGER before_insert_MensajesForo
-BEFORE INSERT ON MensajesForo
-FOR EACH ROW
-BEGIN
-    -- Si el mensaje es una respuesta de un encargado de inventarios
-    IF NEW.id_encargado IS NOT NULL AND NEW.id_respuesta_a IS NOT NULL THEN
-        -- Llamar al procedimiento para actualizar el estado del mensaje original
-        CALL actualizarEstadoMensaje(NEW.id_respuesta_a, NEW.id_encargado);
-    END IF;
-
-    -- Asegurarse de que los mensajes de los encargados no necesiten respuesta
-    IF NEW.id_encargado IS NOT NULL THEN
-        SET NEW.estado = TRUE;
-    END IF;
-END;
-//
-DELIMITER ;
 
 -- Insertar datos de ClienteRegistrado
 INSERT INTO ClienteRegistrado (nombre, apellido, edad, sexo, fecha_nacimiento, documento_identidad, contrasena, correo_electronico, ubicacion)
@@ -593,7 +452,6 @@ SELECT * FROM DatosBancarios;
 SELECT * FROM Productos;
 
 -- Ver contenido de la tabla Categorias;
-
 SELECT * FROM Categorias;
 
 -- Ver contenido de la tabla ProductoCategoria
@@ -605,5 +463,5 @@ SELECT * FROM CarritoCompra;
 -- Ver contenido de la tabla Compras
 SELECT * FROM Compras;
 
--- Ver contenido de la tabla MensajesForo
-SELECT * FROM MensajesForo;
+-- Ver contenido de la tabla mensajes_por_producto
+SELECT * FROM mensajes_por_producto;
