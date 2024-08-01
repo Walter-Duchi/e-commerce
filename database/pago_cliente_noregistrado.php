@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Procesar el pago
     $total_amount = 0;
     $productos_carrito = [];
-    $query = "SELECT Productos.id, Productos.precio, CarritoCompra.cantidad 
+    $query = "SELECT Productos.id, Productos.nombre, Productos.precio, CarritoCompra.cantidad 
               FROM CarritoCompra 
               JOIN Productos ON CarritoCompra.id_producto = Productos.id 
               WHERE CarritoCompra.id_cliente_no_registrado = 1";
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Verificar el saldo del cliente no registrado
-    $query = "SELECT saldo FROM DatosBancarios WHERE id_cliente_no_registrado = 1";
+    $query = "SELECT saldo FROM DatosBancarios WHERE id_cliente_no_registrado = 1 LIMIT 1";  // Agregar LIMIT 1
     $result = $conn->query($query);
     $row = $result->fetch_assoc();
     $saldo_actual = $row['saldo'];
@@ -72,6 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Vaciar el carrito
         $query = "DELETE FROM CarritoCompra WHERE id_cliente_no_registrado = 1";
         $conn->query($query);
+
+        // Guardar productos comprados en la sesión para la factura
+        $_SESSION['productos_factura'] = $productos_carrito;
+        $_SESSION['total_factura'] = $total_amount;
 
         header("Location: ../views/factura.php");
     } else {

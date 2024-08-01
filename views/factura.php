@@ -1,42 +1,60 @@
 <?php
 session_start();
-require_once '../database/connection.php';
-
-$query = "SELECT Compras.id, Productos.nombre, Compras.cantidad, Compras.total, Compras.fecha_compra 
-          FROM Compras 
-          JOIN Productos ON Compras.id_producto = Productos.id 
-          WHERE Compras.id_cliente_no_registrado = 1 
-          ORDER BY Compras.fecha_compra DESC LIMIT 1";
-$result = $conn->query($query);
-
-if ($result->num_rows > 0) {
-    $compra = $result->fetch_assoc();
-} else {
-    $compra = null;
+if (!isset($_SESSION['productos_factura']) || !isset($_SESSION['total_factura'])) {
+    echo "No hay productos en la factura.";
+    exit();
 }
+
+$productos_factura = $_SESSION['productos_factura'];
+$total_factura = $_SESSION['total_factura'];
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factura</title>
-    <link rel="stylesheet" href="../css/factura.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
-    <main>
-        <h1>Factura</h1>
-        <?php if ($compra): ?>
-            <p>ID de la compra: <?php echo $compra['id']; ?></p>
-            <p>Producto: <?php echo $compra['nombre']; ?></p>
-            <p>Cantidad: <?php echo $compra['cantidad']; ?></p>
-            <p>Total pagado: $<?php echo number_format($compra['total'], 2); ?></p>
-            <p>Fecha de la compra: <?php echo $compra['fecha_compra']; ?></p>
-        <?php else: ?>
-            <p>No se encontró información de la compra.</p>
-        <?php endif; ?>
-        <a href="../index.php">Volver a la tienda</a>
-    </main>
+    <h1>Factura</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($productos_factura as $producto): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($producto['nombre']); ?></td>
+                    <td><?php echo htmlspecialchars($producto['cantidad']); ?></td>
+                    <td><?php echo htmlspecialchars(number_format($producto['precio'], 2)); ?></td>
+                    <td><?php echo htmlspecialchars(number_format($producto['precio'] * $producto['cantidad'], 2)); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="3">Total</th>
+                <th><?php echo htmlspecialchars(number_format($total_factura, 2)); ?></th>
+            </tr>
+        </tfoot>
+    </table>
 </body>
 </html>
