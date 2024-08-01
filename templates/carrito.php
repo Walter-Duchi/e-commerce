@@ -64,7 +64,9 @@ $stmt->close();
                         </li>
                     <?php endforeach; ?>
                 </ul>
-                <?php if (!isset($_SESSION['id_usuario'])): ?>
+                <?php if (isset($_SESSION['id_usuario'])): ?>
+                    <a href="../forms/DatosBancarios-ClienteRegistrado.php" class="button">Proceder al Pago</a>
+                <?php else: ?>
                     <a href="../forms/PagoClienteNoRegistrado.php" class="button">Proceder al Pago</a>
                 <?php endif; ?>
             <?php endif; ?>
