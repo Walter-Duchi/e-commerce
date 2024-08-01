@@ -76,6 +76,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Guardar productos comprados en la sesión para la factura
         $_SESSION['productos_factura'] = $productos_carrito;
         $_SESSION['total_factura'] = $total_amount;
+        $_SESSION['cliente_nombre'] = $nombre;
+        $_SESSION['cliente_cedula'] = $cedula;
+        $_SESSION['cliente_ubicacion'] = $ubicacion;
 
         header("Location: ../views/factura.php");
     } else {

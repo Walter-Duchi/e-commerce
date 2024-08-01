@@ -206,6 +206,7 @@ DELIMITER ;
 
 -- Procedimiento almacenado para realizar la compra y deducir saldo
 DELIMITER //
+
 CREATE PROCEDURE IF NOT EXISTS realizarCompra(
     IN cliente_id INT,
     IN cliente_no_registrado_id INT,
@@ -217,22 +218,26 @@ BEGIN
     DECLARE saldo_actual DECIMAL(10, 2);
     DECLARE precio_producto DECIMAL(10, 2);
     DECLARE total_compra DECIMAL(10, 2);
+    DECLARE new_id_compra INT;
 
     -- Obtener el saldo actual del cliente
     IF cliente_id IS NOT NULL THEN
         SELECT saldo INTO saldo_actual
         FROM DatosBancarios
-        WHERE id_cliente = cliente_id;
+        WHERE id_cliente = cliente_id
+        LIMIT 1;  -- Asegurar que solo se devuelve una fila
     ELSE
         SELECT saldo INTO saldo_actual
         FROM DatosBancarios
-        WHERE id_cliente_no_registrado = cliente_no_registrado_id;
+        WHERE id_cliente_no_registrado = cliente_no_registrado_id
+        LIMIT 1;  -- Asegurar que solo se devuelve una fila
     END IF;
 
     -- Obtener el precio del producto
     SELECT precio INTO precio_producto
     FROM Productos
-    WHERE id = producto_id;
+    WHERE id = producto_id
+    LIMIT 1;  -- Asegurar que solo se devuelve una fila
 
     -- Calcular el total de la compra
     SET total_compra = cantidad * precio_producto;
@@ -242,6 +247,12 @@ BEGIN
         -- Realizar la compra y actualizar el saldo
         INSERT INTO Compras (id_cliente, id_cliente_no_registrado, id_producto, cantidad, total)
         VALUES (cliente_id, cliente_no_registrado_id, producto_id, cantidad, total_compra);
+
+        -- Obtener el ID de la compra insertada
+        SET new_id_compra = LAST_INSERT_ID();
+
+        -- Calcular la fecha de entrega
+        CALL calcularFechaEntrega(new_id_compra);
 
         -- Actualizar el saldo en la tabla correspondiente
         IF cliente_id IS NOT NULL THEN
@@ -259,6 +270,7 @@ BEGIN
         SET saldo_suficiente = FALSE;
     END IF;
 END //
+
 DELIMITER ;
 
 
