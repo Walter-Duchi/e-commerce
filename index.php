@@ -30,7 +30,7 @@ session_start();
         if (!(error_reporting() & $severity)) {
             return false; // Ignorar errores no configurados en error_reporting
         }
-        \Sentry\captureMessage("Error: $message en $file:$line", \Sentry\Event::LEVEL_ERROR);
+        \Sentry\captureMessage("Error: $message en $file:$line", \Sentry\Severity::error());
         throw new ErrorException($message, 0, $severity, $file, $line);
     });
 
@@ -45,7 +45,7 @@ session_start();
         if ($error && in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE])) {
             \Sentry\captureMessage(
                 "Error fatal: {$error['message']} en {$error['file']}:{$error['line']}",
-                \Sentry\Event::LEVEL_FATAL
+                \Sentry\Severity::fatal()
             );
         }
     });
