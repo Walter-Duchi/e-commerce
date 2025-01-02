@@ -12,7 +12,6 @@ session_start();
 </head>
 <body>
     <?php
-
     require 'database/connection.php';
 
     if (isset($_POST['cuenta'])) {
